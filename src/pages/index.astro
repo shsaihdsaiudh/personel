@@ -1,8 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.astro";
+import Timeline from "../components/Timeline.astro";
+import ProjectGrid from "../components/ProjectGrid.astro";
+import { experiences } from "../data/experience";
+import { projects } from "../data/projects";
 ---
 
 <Layout title="Personel" description="A minimalist personal homepage.">
   <Hero />
+  <Timeline items={experiences} />
+  <ProjectGrid items={projects} />
 </Layout>

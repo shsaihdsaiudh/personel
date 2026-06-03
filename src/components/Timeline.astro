@@ -1,0 +1,63 @@
+---
+import type { ExperienceItem } from "../data/experience";
+
+interface Props {
+  items: ExperienceItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<section class="max-w-3xl mx-auto px-6 py-16">
+  <h2 class="text-2xl font-bold tracking-tight mb-10">经历</h2>
+
+  <div class="relative">
+    <!-- 垂直时间线 -->
+    <div
+      class="
+        absolute left-0 md:left-[8.5rem] top-2 bottom-0
+        w-px bg-black/[0.08]
+      "
+      aria-hidden="true"
+    ></div>
+
+    <ul class="flex flex-col gap-8" role="list">
+      {
+        items.map((item) => (
+          <li class="flex flex-col md:flex-row md:items-start gap-2 md:gap-0">
+            <!-- 左侧时间 -->
+            <div
+              class="
+                shrink-0 md:w-[8.5rem] md:pr-8 md:text-right
+                text-sm text-black/40 tracking-wide
+              "
+            >
+              {item.time}
+            </div>
+
+            <!-- 右侧内容卡片 -->
+            <div
+              class="
+                flex-1 bg-white
+                border border-black/[0.06]
+                rounded-lg px-5 py-4
+                transition-all duration-300
+                hover:border-black/12
+                hover:-translate-y-0.5
+                hover:shadow-[0_8px_24px_-8px_rgba(0,0,0,0.08)]
+              "
+            >
+              <h3 class="font-semibold text-black/85 leading-snug">
+                {item.organization}
+              </h3>
+              <p class="text-sm text-black/50 mb-2">{item.role}</p>
+              <p class="text-sm text-black/60 leading-relaxed">
+                {item.description}
+              </p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
