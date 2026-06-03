@@ -9,15 +9,15 @@ const { items } = Astro.props;
 ---
 
 <section
-  class="max-w-3xl mx-auto px-6 py-16
+  class="max-w-3xl mx-auto px-4 sm:px-6 py-12 sm:py-16
          animate-fade-in-up animate-section-3"
 >
-  <h2 class="text-2xl font-bold tracking-tight mb-10 dark:text-slate-100">
+  <h2 class="text-xl sm:text-2xl font-bold tracking-tight mb-8 sm:mb-10 dark:text-slate-100">
     项目
   </h2>
 
   <div
-    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5
            animate-stagger-children"
   >
     {
@@ -28,34 +28,34 @@ const { items } = Astro.props;
             card-hover
             bg-white dark:bg-slate-800
             border border-black/[0.06] dark:border-slate-700/50
-            rounded-lg p-5
+            rounded-lg p-4 sm:p-5
           "
         >
           <!-- 项目名 -->
           <h3
             class="font-semibold text-black/85 dark:text-slate-100
-                   leading-snug mb-2"
+                   leading-snug mb-1.5 sm:mb-2 text-sm sm:text-base"
           >
             {item.name}
           </h3>
 
           <!-- 简介 -->
           <p
-            class="text-sm text-black/55 dark:text-slate-400
-                   leading-relaxed mb-4 flex-1"
+            class="text-xs sm:text-sm text-black/55 dark:text-slate-400
+                   leading-relaxed mb-3 sm:mb-4 flex-1"
           >
             {item.description}
           </p>
 
           <!-- 技术栈标签 -->
-          <div class="flex flex-wrap gap-1.5 mb-4">
+          <div class="flex flex-wrap gap-1 sm:gap-1.5 mb-3 sm:mb-4">
             {item.techStack.map((tech) => (
               <span
                 class="
                   inline-block
-                  px-2.5 py-0.5
+                  px-2 sm:px-2.5 py-0.5
                   rounded-full
-                  text-xs text-black/45 dark:text-slate-400
+                  text-[10px] sm:text-xs text-black/45 dark:text-slate-400
                   bg-black/[0.03] dark:bg-slate-700/30
                   border border-black/[0.05] dark:border-slate-600/40
                 "
@@ -74,16 +74,19 @@ const { items } = Astro.props;
               class="
                 self-start
                 inline-flex items-center gap-1.5
-                text-sm text-black/50 dark:text-slate-400
-                px-3 py-1.5
+                text-xs sm:text-sm text-black/50 dark:text-slate-400
+                px-2.5 sm:px-3 py-1.5
                 rounded-lg
                 border border-black/[0.06] dark:border-slate-600/40
                 no-underline
                 link-underline
                 transition-all duration-200
-                hover:text-black dark:hover:text-slate-100
-                hover:border-black/20 dark:hover:border-slate-500
-                hover:bg-black/[0.02] dark:hover:bg-slate-700/30
+                hover-hover:text-black dark:hover-hover:text-slate-100
+                hover-hover:border-black/20 dark:hover-hover:border-slate-500
+                hover-hover:bg-black/[0.02] dark:hover-hover:bg-slate-700/30
+                active:text-black dark:active:text-slate-100
+                active:border-black/30 dark:active:border-slate-400
+                active:bg-black/[0.05] dark:active:bg-slate-600/40
               "
             >
               <svg

@@ -9,36 +9,37 @@ const { items } = Astro.props;
 ---
 
 <section
-  class="max-w-3xl mx-auto px-6 py-16
+  class="max-w-3xl mx-auto px-4 sm:px-6 py-12 sm:py-16
          animate-fade-in-up animate-section-2"
 >
-  <h2 class="text-2xl font-bold tracking-tight mb-10 dark:text-slate-100">
+  <h2 class="text-xl sm:text-2xl font-bold tracking-tight mb-8 sm:mb-10 dark:text-slate-100">
     经历
   </h2>
 
   <div class="relative">
-    <!-- 垂直时间线 -->
+    <!-- 垂直时间线：仅平板+显示 -->
     <div
       class="
-        absolute left-0 md:left-[8.5rem] top-2 bottom-0
+        hidden sm:block
+        absolute left-[8.5rem] top-2 bottom-0
         w-px bg-black/[0.08] dark:bg-slate-600/40
       "
       aria-hidden="true"
     ></div>
 
     <ul
-      class="flex flex-col gap-8 animate-stagger-children"
+      class="flex flex-col gap-6 sm:gap-8 animate-stagger-children"
       role="list"
     >
       {
         items.map((item) => (
-          <li class="flex flex-col md:flex-row md:items-start gap-2 md:gap-0">
+          <li class="flex flex-col sm:flex-row sm:items-start gap-1.5 sm:gap-0">
             <!-- 左侧时间 -->
             <div
               class="
-                shrink-0 md:w-[8.5rem] md:pr-8 md:text-right
-                text-sm text-black/40 dark:text-slate-500
-                tracking-wide
+                shrink-0 sm:w-[8.5rem] sm:pr-8 sm:text-right
+                text-xs sm:text-sm text-black/40 dark:text-slate-500
+                tracking-wide mb-1 sm:mb-0
               "
             >
               {item.time}
@@ -50,20 +51,20 @@ const { items } = Astro.props;
                 flex-1 card-hover
                 bg-white dark:bg-slate-800
                 border border-black/[0.06] dark:border-slate-700/50
-                rounded-lg px-5 py-4
+                rounded-lg px-4 sm:px-5 py-3 sm:py-4
               "
             >
               <h3
                 class="font-semibold text-black/85 dark:text-slate-100
-                       leading-snug"
+                       leading-snug text-sm sm:text-base"
               >
                 {item.organization}
               </h3>
-              <p class="text-sm text-black/50 dark:text-slate-400 mb-2">
+              <p class="text-xs sm:text-sm text-black/50 dark:text-slate-400 mt-0.5 mb-1.5 sm:mb-2">
                 {item.role}
               </p>
               <p
-                class="text-sm text-black/60 dark:text-slate-400
+                class="text-xs sm:text-sm text-black/60 dark:text-slate-400
                        leading-relaxed"
               >
                 {item.description}

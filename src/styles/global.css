@@ -3,6 +3,16 @@
 /* ===== Tailwind v4 dark mode via data-theme ===== */
 @variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
+/* ===== 自定义 hover-hover 变体：hover 效果仅在鼠标设备生效 ===== */
+@custom-variant hover-hover (&:hover);
+
+/* 触摸设备：移除 sticky hover 状态 */
+@media (hover: none) {
+  .hover-hover\:opacity-70:active {
+    opacity: 1;
+  }
+}
+
 /* ===== CSS 变量：主题色 ===== */
 :root {
   --color-bg: #fff;
@@ -133,9 +143,11 @@
   transform-origin: right;
   transition: transform 0.3s ease;
 }
-.link-underline:hover::after {
-  transform: scaleX(1);
-  transform-origin: left;
+@media (hover: hover) {
+  .link-underline:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
 }
 
 /* ===== 卡片悬浮微交互增强 ===== */
@@ -145,10 +157,18 @@
     box-shadow 0.3s ease,
     border-color 0.3s ease;
 }
-.card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px -8px var(--color-shadow);
-  border-color: var(--color-text-muted);
+@media (hover: hover) {
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px -8px var(--color-shadow);
+    border-color: var(--color-text-muted);
+  }
+}
+/* 触摸设备的 tap 反馈 */
+@media (hover: none) {
+  .card-hover:active {
+    transform: scale(0.98);
+  }
 }
 
 /* ===== 头像悬浮旋转 ===== */
@@ -157,8 +177,10 @@
     transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
     box-shadow 0.4s ease;
 }
-.avatar-hover:hover {
-  transform: rotate(6deg) scale(1.08);
+@media (hover: hover) {
+  .avatar-hover:hover {
+    transform: rotate(6deg) scale(1.08);
+  }
 }
 
 /* ===== 主题切换按钮 ===== */
