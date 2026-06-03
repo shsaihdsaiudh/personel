@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+/* ===== 全局基础样式：极简黑白风 ===== */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family:
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      "Helvetica Neue",
+      Arial,
+      "Noto Sans",
+      sans-serif,
+      "Apple Color Emoji",
+      "Segoe UI Emoji";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-black leading-relaxed;
+    min-height: 100vh;
+  }
+
+  a {
+    @apply text-black underline underline-offset-4 decoration-black/30
+           hover:decoration-black transition-colors;
+  }
+
+  ::selection {
+    @apply bg-black text-white;
+  }
+}

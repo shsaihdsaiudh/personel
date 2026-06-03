@@ -1,0 +1,51 @@
+---
+import "../styles/global.css";
+
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    {description && <meta name="description" content={description} />}
+    <title>{title}</title>
+  </head>
+
+  <body class="flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="border-b border-black/10">
+      <div class="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
+        <a href="/" class="text-lg font-semibold no-underline hover:opacity-70 transition-opacity">
+          {title}
+        </a>
+        <nav class="flex gap-6 text-sm">
+          <a href="/">Home</a>
+          <a href="/about">About</a>
+          <a href="/blog">Blog</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-black/10 mt-auto">
+      <div class="max-w-3xl mx-auto px-6 py-6 text-center text-xs text-black/40">
+        &copy; {new Date().getFullYear()} {title}. All rights reserved.
+      </div>
+    </footer>
+  </body>
+</html>
