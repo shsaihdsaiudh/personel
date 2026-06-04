@@ -9,63 +9,78 @@ const { items } = Astro.props;
 ---
 
 <section
-  class="max-w-3xl mx-auto px-4 sm:px-6 py-12 sm:py-16
+  class="relative max-w-5xl mx-auto px-5 sm:px-8 py-16 sm:py-24
          animate-fade-in-up animate-section-2"
 >
-  <h2 class="text-xl sm:text-2xl font-bold tracking-tight mb-8 sm:mb-10 dark:text-slate-100">
-    经历
-  </h2>
+  <!-- Section header -->
+  <div class="flex items-end justify-between mb-12 sm:mb-16">
+    <div>
+      <span class="eyebrow">— 01 / Experience</span>
+      <h2
+        class="font-display mt-3 text-4xl sm:text-5xl md:text-6xl tracking-tight"
+        style="color: var(--color-text); font-weight: 400;"
+      >
+        A path,
+        <span style="font-style: italic; color: var(--color-text-muted);">
+          one chapter at a time.
+        </span>
+      </h2>
+    </div>
+    <div
+      class="hidden md:block text-right text-[0.72rem] tracking-[0.2em] uppercase shrink-0 ml-6"
+      style="color: var(--color-text-faint);"
+    >
+      {items.length.toString().padStart(2, "0")} entries
+    </div>
+  </div>
 
   <div class="relative">
-    <!-- 垂直时间线：仅平板+显示 -->
-    <div
-      class="
-        hidden sm:block
-        absolute left-[8.5rem] top-2 bottom-0
-        w-px bg-black/[0.08] dark:bg-slate-600/40
-      "
-      aria-hidden="true"
-    ></div>
+    <!-- Vertical rail (desktop) -->
+    <div class="hidden sm:block timeline-rail" aria-hidden="true"></div>
 
-    <ul
-      class="flex flex-col gap-6 sm:gap-8 animate-stagger-children"
-      role="list"
-    >
+    <ul class="flex flex-col gap-6 sm:gap-8 animate-stagger-children" role="list">
       {
         items.map((item) => (
-          <li class="flex flex-col sm:flex-row sm:items-start gap-1.5 sm:gap-0">
-            <!-- 左侧时间 -->
+          <li
+            class="relative flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-0
+                   animate-fade-in-up"
+          >
+            <!-- Time -->
             <div
               class="
-                shrink-0 sm:w-[8.5rem] sm:pr-8 sm:text-right
-                text-xs sm:text-sm text-black/40 dark:text-slate-500
-                tracking-wide mb-1 sm:mb-0
+                shrink-0 sm:w-[9.25rem] sm:pr-10 sm:text-right
+                font-display italic mb-1 sm:mb-0 sm:pt-0.5
+                text-sm sm:text-base
               "
+              style="color: var(--color-text-muted); letter-spacing: 0.01em;"
             >
               {item.time}
             </div>
 
-            <!-- 右侧内容卡片 -->
+            <!-- Dot on rail (desktop) -->
+            <span class="hidden sm:block timeline-dot" aria-hidden="true" />
+
+            <!-- Card -->
             <div
-              class="
-                flex-1 card-hover
-                bg-white dark:bg-slate-800
-                border border-black/[0.06] dark:border-slate-700/50
-                rounded-lg px-4 sm:px-5 py-3 sm:py-4
-              "
+              class="flex-1 glass-card gradient-border px-5 sm:px-7 py-5 sm:py-6 sm:ml-8"
             >
-              <h3
-                class="font-semibold text-black/85 dark:text-slate-100
-                       leading-snug text-sm sm:text-base"
+              <div class="flex items-baseline justify-between gap-3 mb-1">
+                <h3
+                  class="font-display text-lg sm:text-xl"
+                  style="color: var(--color-text); font-weight: 500;"
+                >
+                  {item.organization}
+                </h3>
+              </div>
+              <p
+                class="text-xs sm:text-sm tracking-[0.14em] uppercase mb-3"
+                style="color: var(--color-accent); font-weight: 500;"
               >
-                {item.organization}
-              </h3>
-              <p class="text-xs sm:text-sm text-black/50 dark:text-slate-400 mt-0.5 mb-1.5 sm:mb-2">
                 {item.role}
               </p>
               <p
-                class="text-xs sm:text-sm text-black/60 dark:text-slate-400
-                       leading-relaxed"
+                class="text-sm sm:text-[0.95rem] leading-relaxed"
+                style="color: var(--color-text-soft);"
               >
                 {item.description}
               </p>

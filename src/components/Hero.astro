@@ -1,185 +1,191 @@
 ---
-// Hero.astro — 极简黑白风 Hero 区域 + 入场动效
+// Hero.astro — Editorial × Quiet Luxury
 ---
 
 <section
-  class="flex flex-col items-center justify-center pt-20 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6 text-center
+  class="relative max-w-5xl mx-auto px-5 sm:px-8 pt-20 sm:pt-28 md:pt-36 pb-16 sm:pb-24
          animate-fade-in-up animate-section-1"
 >
-  <!-- ===== 头像占位：圆形 + 悬浮旋转缩放 ===== -->
-  <div class="relative mb-6 sm:mb-8 md:mb-10">
-    <div
-      class="
-        avatar-hover
-        w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full
-        bg-black/[0.04] dark:bg-slate-700/40
-        ring-1 ring-black/10 dark:ring-slate-600/50
-        shadow-[0_0_40px_-8px_rgba(0,0,0,0.15)]
-        dark:shadow-[0_0_40px_-8px_rgba(0,0,0,0.4)]
-        flex items-center justify-center
-        cursor-default
-      "
-    >
-      <!-- 用户图标占位 -->
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="40"
-        height="40"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="text-black/25 dark:text-slate-300/40 w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10"
-      >
-        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-        <circle cx="12" cy="7" r="4" />
-      </svg>
-    </div>
-  </div>
-
-  <!-- ===== 姓名 ===== -->
-  <h1
-    class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-3 sm:mb-4 md:mb-5
-           dark:text-slate-100"
-  >
-    Your Name
-  </h1>
-
-  <!-- ===== 一句话介绍 ===== -->
-  <p
-    class="text-base sm:text-lg md:text-xl text-black/45 dark:text-slate-400
-           leading-relaxed max-w-md mb-6 sm:mb-8"
-  >
-    全栈开发者 / 开源爱好者
-  </p>
-
-  <!-- ===== 标签徽章 ===== -->
-  <div class="mb-8 sm:mb-10 md:mb-12 flex flex-wrap justify-center gap-2">
-    <span
-      class="
-        inline-flex items-center gap-1.5
-        px-3 sm:px-4 py-1 sm:py-1.5
-        rounded-full
-        bg-black/[0.04] dark:bg-slate-700/30
-        text-xs sm:text-sm text-black/60 dark:text-slate-300
-        border border-black/[0.08] dark:border-slate-600/40
-        hover-hover:bg-black/[0.07] hover-hover:border-black/15
-        dark:hover-hover:bg-slate-700/50 dark:hover-hover:border-slate-500/60
-        active:bg-black/[0.1] active:border-black/20
-        dark:active:bg-slate-600/60 dark:active:border-slate-400/60
-        transition-colors cursor-default
-      "
-    >
-      🏢 腾讯实习
+  <!-- Eyebrow -->
+  <div class="flex items-center justify-between mb-10 sm:mb-14">
+    <span class="eyebrow">— Portfolio · MMXXVI</span>
+    <span class="status-pill">
+      <span class="dot" aria-hidden="true"></span>
+      Available for select work
     </span>
   </div>
 
-  <!-- ===== 社交链接按钮 ===== -->
-  <div class="flex items-center gap-1 sm:gap-2">
-    <!-- GitHub -->
-    <a
-      href="https://github.com"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="
-        inline-flex items-center justify-center
-        w-10 h-10 sm:w-11 sm:h-11
-        rounded-full
-        text-black/50 dark:text-slate-400
-        hover-hover:text-black dark:hover-hover:text-slate-100
-        hover-hover:bg-black/[0.04] dark:hover-hover:bg-slate-700/40
-        active:text-black dark:active:text-slate-100
-        active:bg-black/[0.08] dark:active:bg-slate-600/50
-        transition-colors
-      "
-      aria-label="GitHub"
-      title="GitHub"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-        <path d="M9 18c-4.51 2-5-2-7-2" />
-      </svg>
-    </a>
+  <!-- Main split: name on left, meta on right -->
+  <div class="grid grid-cols-12 gap-6 sm:gap-10 items-end">
+    <!-- Avatar — overlapping decorative element -->
+    <div class="col-span-12 md:col-span-3 order-2 md:order-1 flex md:block justify-center">
+      <div class="avatar-frame relative">
+        <div
+          class="
+            relative w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36
+            rounded-full overflow-hidden
+            flex items-center justify-center
+          "
+          style="
+            background: linear-gradient(140deg, var(--color-surface) 0%, var(--color-bg-soft) 100%);
+            border: 1px solid var(--color-border-strong);
+            box-shadow: 0 30px 60px -20px var(--color-shadow-lg);
+          "
+        >
+          <!-- Monogram fallback -->
+          <span
+            class="font-display text-5xl sm:text-6xl font-light italic"
+            style="color: var(--color-text); letter-spacing: -0.02em;"
+          >
+            Y
+          </span>
+          <span
+            class="absolute bottom-3 right-3 w-2.5 h-2.5 rounded-full"
+            style="background: var(--color-accent); box-shadow: 0 0 10px var(--color-accent-glow);"
+            aria-hidden="true"
+          ></span>
+        </div>
+      </div>
+    </div>
 
-    <!-- LinkedIn -->
-    <a
-      href="https://linkedin.com"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="
-        inline-flex items-center justify-center
-        w-10 h-10 sm:w-11 sm:h-11
-        rounded-full
-        text-black/50 dark:text-slate-400
-        hover-hover:text-black dark:hover-hover:text-slate-100
-        hover-hover:bg-black/[0.04] dark:hover-hover:bg-slate-700/40
-        active:text-black dark:active:text-slate-100
-        active:bg-black/[0.08] dark:active:bg-slate-600/50
-        transition-colors
-      "
-      aria-label="LinkedIn"
-      title="LinkedIn"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+    <!-- Name + tagline -->
+    <div class="col-span-12 md:col-span-9 order-1 md:order-2">
+      <h1
+        class="font-display leading-[0.95] tracking-tight"
+        style="color: var(--color-text); font-weight: 400;"
       >
-        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-        <rect width="4" height="12" x="2" y="9" />
-        <circle cx="4" cy="4" r="2" />
-      </svg>
-    </a>
+        <span
+          class="block text-[clamp(2.6rem,9vw,6.5rem)] italic"
+          style="font-weight: 300;"
+        >
+          Your
+        </span>
+        <span
+          class="block text-[clamp(2.6rem,9vw,6.5rem)] -mt-2 sm:-mt-3"
+          style="font-weight: 500;"
+        >
+          Name<span style="color: var(--color-accent);">.</span>
+        </span>
+      </h1>
 
-    <!-- Email -->
-    <a
-      href="mailto:hello@example.com"
-      class="
-        inline-flex items-center justify-center
-        w-10 h-10 sm:w-11 sm:h-11
-        rounded-full
-        text-black/50 dark:text-slate-400
-        hover-hover:text-black dark:hover-hover:text-slate-100
-        hover-hover:bg-black/[0.04] dark:hover-hover:bg-slate-700/40
-        active:text-black dark:active:text-slate-100
-        active:bg-black/[0.08] dark:active:bg-slate-600/50
-        transition-colors
-      "
-      aria-label="Email"
-      title="Email"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+      <!-- Tagline -->
+      <p
+        class="mt-6 sm:mt-8 text-base sm:text-lg md:text-xl max-w-xl leading-relaxed"
+        style="color: var(--color-text-soft);"
       >
-        <rect width="20" height="16" x="2" y="4" rx="2" />
-        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-      </svg>
-    </a>
+        全栈开发者 · 开源爱好者。
+        <span style="color: var(--color-text-muted);">
+          热爱在代码与设计之间寻找平衡，构建经得起时间打磨的产品。
+        </span>
+      </p>
+    </div>
+  </div>
+
+  <!-- Meta strip: location · role · time -->
+  <div
+    class="mt-12 sm:mt-16 grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-4 sm:gap-x-8"
+    style="border-top: 1px solid var(--color-border); padding-top: 1.75rem;"
+  >
+    <div>
+      <div class="eyebrow mb-2" style="--tw-text-opacity: 1;">Based in</div>
+      <div
+        class="font-display text-base sm:text-lg"
+        style="color: var(--color-text);"
+      >
+        Shenzhen, CN
+      </div>
+    </div>
+    <div>
+      <div class="eyebrow mb-2">Role</div>
+      <div
+        class="font-display text-base sm:text-lg"
+        style="color: var(--color-text);"
+      >
+        Full-stack Engineer
+      </div>
+    </div>
+    <div>
+      <div class="eyebrow mb-2">Currently</div>
+      <div
+        class="font-display text-base sm:text-lg"
+        style="color: var(--color-text);"
+      >
+        Tencent · Intern
+      </div>
+    </div>
+    <div>
+      <div class="eyebrow mb-2">Reach me</div>
+      <div class="flex items-center gap-1 -ml-2">
+        <a
+          href="https://github.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="icon-btn"
+          aria-label="GitHub"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+            ></path>
+            <path d="M9 18c-4.51 2-5-2-7-2"></path>
+          </svg>
+        </a>
+        <a
+          href="https://linkedin.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="icon-btn"
+          aria-label="LinkedIn"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+            ></path>
+            <rect width="4" height="12" x="2" y="9"></rect>
+            <circle cx="4" cy="4" r="2"></circle>
+          </svg>
+        </a>
+        <a
+          href="mailto:hello@example.com"
+          class="icon-btn"
+          aria-label="Email"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
   </div>
 </section>

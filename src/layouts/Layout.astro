@@ -12,7 +12,7 @@ export interface Props {
 
 const {
   title,
-  description = "极简黑白风格的个人主页，展示项目经历与技术能力。",
+  description = "Editorial-grade personal homepage — quiet luxury for the web.",
   slug = "",
   ogType = "website",
 } = Astro.props;
@@ -30,10 +30,7 @@ const jsonLd = {
   image: ogImage,
   jobTitle: "全栈开发者",
   description: "全栈开发者 / 开源爱好者",
-  sameAs: [
-    "https://github.com",
-    "https://linkedin.com",
-  ],
+  sameAs: ["https://github.com", "https://linkedin.com"],
 };
 ---
 
@@ -48,7 +45,7 @@ const jsonLd = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#f5f1ea" />
     <meta name="color-scheme" content="light dark" />
 
     <!-- Canonical URL -->
@@ -73,10 +70,21 @@ const jsonLd = {
     <meta name="twitter:image" content={ogImage} />
     <meta name="twitter:image:alt" content={title} />
 
+    <!-- Fonts: Fraunces (display serif) + Inter (text) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
     <title>{title}</title>
 
     <!-- JSON-LD 结构化数据 -->
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd, null, 2)}>
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(jsonLd, null, 2)}
+    >
     </script>
 
     <!-- 主题初始化：防止闪烁 -->
@@ -93,43 +101,60 @@ const jsonLd = {
     </script>
   </head>
 
-  <body class="flex flex-col min-h-screen">
+  <body class="flex flex-col min-h-screen relative">
+    <!-- Ambient layers -->
+    <div class="aurora" aria-hidden="true"></div>
+    <div class="aurora-extra" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
     <!-- Header -->
     <header
-      class="border-b border-black/10 dark:border-slate-700/50
-             bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm
-             sticky top-0 z-10 transition-colors duration-300"
+      class="sticky top-0 z-20 transition-all duration-500"
+      style="background: color-mix(in srgb, var(--color-bg) 70%, transparent); backdrop-filter: blur(16px) saturate(1.1); border-bottom: 1px solid var(--color-border);"
     >
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
+      <div
+        class="max-w-5xl mx-auto px-5 sm:px-8 py-4 flex items-center justify-between"
+      >
+        <!-- Monogram logo -->
         <a
           href="/"
-          class="text-base sm:text-lg font-semibold no-underline hover-hover:opacity-70 transition-opacity
-                 dark:text-slate-100"
+          class="group inline-flex items-center gap-2.5 no-underline"
+          aria-label="Home"
         >
-          {title}
+          <span
+            class="inline-flex items-center justify-center w-8 h-8 rounded-full font-display text-[0.95rem] font-medium"
+            style="border: 1px solid var(--color-border-strong); color: var(--color-text);"
+          >
+            <span style="color: var(--color-accent);">Y</span>
+          </span>
+          <span
+            class="font-display text-[0.95rem] tracking-wide hidden sm:inline-block"
+            style="color: var(--color-text);"
+          >
+            Your Name
+            <span
+              class="ml-1 text-[0.7rem] tracking-[0.2em] uppercase"
+              style="color: var(--color-text-muted); font-family: 'Inter', sans-serif;"
+            >
+              · Studio
+            </span>
+          </span>
         </a>
-        <div class="flex items-center gap-1 sm:gap-2">
-          <nav class="flex gap-3 sm:gap-6 text-xs sm:text-sm">
+
+        <div class="flex items-center gap-1 sm:gap-3">
+          <nav
+            class="hidden sm:flex items-center gap-7 text-[0.78rem] tracking-[0.16em] uppercase"
+            style="color: var(--color-text-muted); font-weight: 500;"
+          >
+            <a href="/" class="link-underline">Index</a>
+            <a href="/about" class="link-underline">About</a>
+            <a href="/blog" class="link-underline">Journal</a>
             <a
-              href="/"
-              class="dark:text-slate-300 dark:hover:text-slate-100
-                     link-underline decoration-1"
+              href="mailto:hello@example.com"
+              class="link-underline"
+              style="color: var(--color-text);"
             >
-              Home
-            </a>
-            <a
-              href="/about"
-              class="dark:text-slate-300 dark:hover:text-slate-100
-                     link-underline decoration-1"
-            >
-              About
-            </a>
-            <a
-              href="/blog"
-              class="dark:text-slate-300 dark:hover:text-slate-100
-                     link-underline decoration-1"
-            >
-              Blog
+              Contact
             </a>
           </nav>
 
@@ -140,7 +165,6 @@ const jsonLd = {
             aria-label="切换主题"
             title="切换亮色/暗色主题"
           >
-            <!-- 太阳图标（暗色模式下显示） -->
             <svg
               class="icon-sun"
               xmlns="http://www.w3.org/2000/svg"
@@ -149,21 +173,20 @@ const jsonLd = {
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
+              stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
             >
-              <circle cx="12" cy="12" r="5" />
-              <line x1="12" y1="1" x2="12" y2="3" />
-              <line x1="12" y1="21" x2="12" y2="23" />
-              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-              <line x1="1" y1="12" x2="3" y2="12" />
-              <line x1="21" y1="12" x2="23" y2="12" />
-              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
             </svg>
-            <!-- 月亮图标（亮色模式下显示） -->
             <svg
               class="icon-moon"
               xmlns="http://www.w3.org/2000/svg"
@@ -172,11 +195,11 @@ const jsonLd = {
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
+              stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
             >
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
             </svg>
           </button>
         </div>
@@ -184,20 +207,49 @@ const jsonLd = {
     </header>
 
     <!-- 主内容区 -->
-    <main class="flex-1">
+    <main class="flex-1 relative">
       <slot />
     </main>
 
     <!-- Footer -->
     <footer
-      class="border-t border-black/10 dark:border-slate-700/50 mt-auto
-             transition-colors duration-300"
+      class="mt-20 sm:mt-32 relative"
+      style="border-top: 1px solid var(--color-border);"
     >
+      <!-- Marquee signature -->
       <div
-        class="max-w-3xl mx-auto px-4 sm:px-6 py-5 sm:py-6 text-center text-xs
-               text-black/40 dark:text-slate-500"
+        class="overflow-hidden py-10 sm:py-14"
+        style="border-bottom: 1px solid var(--color-border);"
       >
-        &copy; {new Date().getFullYear()} {title}. All rights reserved.
+        <div
+          class="marquee font-display text-5xl sm:text-7xl md:text-8xl"
+          style="color: var(--color-text); opacity: 0.92; font-weight: 300; font-style: italic;"
+          aria-hidden="true"
+        >
+          <span>Crafted with intent</span>
+          <span style="color: var(--color-accent);">✦</span>
+          <span>Designed in silence</span>
+          <span style="color: var(--color-accent);">✦</span>
+          <span>Crafted with intent</span>
+          <span style="color: var(--color-accent);">✦</span>
+          <span>Designed in silence</span>
+          <span style="color: var(--color-accent);">✦</span>
+        </div>
+      </div>
+
+      <div
+        class="max-w-5xl mx-auto px-5 sm:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[0.72rem] tracking-[0.16em] uppercase"
+        style="color: var(--color-text-muted);"
+      >
+        <span>
+          &copy; {new Date().getFullYear()} — All rights reserved
+        </span>
+        <span class="flex items-center gap-2">
+          <span
+            class="inline-block w-1 h-1 rounded-full"
+            style="background: var(--color-accent);"></span>
+          Made with care · v1.0
+        </span>
       </div>
     </footer>
 
@@ -206,20 +258,15 @@ const jsonLd = {
       (function () {
         const html = document.documentElement;
         const btn = document.getElementById("theme-toggle");
-
         function applyTheme(theme) {
           html.setAttribute("data-theme", theme);
         }
-
-        // 监听系统主题变化（仅在用户未手动设置时生效）
         const mql = window.matchMedia("(prefers-color-scheme: dark)");
         mql.addEventListener("change", (e) => {
           if (!localStorage.getItem("theme")) {
             applyTheme(e.matches ? "dark" : "light");
           }
         });
-
-        // 按钮点击切换
         btn?.addEventListener("click", () => {
           const current = html.getAttribute("data-theme");
           const next = current === "dark" ? "light" : "dark";
