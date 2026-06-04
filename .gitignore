@@ -34,3 +34,6 @@ pnpm-debug.log*
 # pnpm-lock.yaml
 .vercel
 .env*
+
+# private notes / docs containing secrets
+vercel-blob-guide.md
