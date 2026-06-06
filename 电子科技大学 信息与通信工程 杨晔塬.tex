@@ -1,0 +1,111 @@
+% !TEX program = xelatex
+%%
+%% Copyright (c) 2018-2020 Weitian LI <wt@liwt.net>
+%% CC BY 4.0 License
+%%
+%% Created: 2018-04-11
+%%
+
+% Chinese version
+\documentclass[zh]{resume}
+\usepackage{enumitem}
+\setlist[itemize]{nosep, leftmargin=1.2em, topsep=-1pt}
+\titlespacing{\section}{0em}{1.2ex}{0.5ex}
+\linespread{0.95}
+\geometry{margin=0.5cm}
+\fileinfo{}
+
+\name{晔塬}{杨}
+
+\photo[shape=square, position=left]{4.0em}{杨晔塬.png}
+
+\keywords{Java, Spring Cloud, DDD, Redis, AI Agent, RAG}
+
+% \tagline{\texorpdfstring{\icon{\faBinoculars} }{}<position-to-look-for>}
+% \tagline{<current-position>}
+
+\profile{
+  \mobile{150-4741-0720}
+  \email{2776079516@qq.com}
+  \university{电子科技大学~\tag{985}}
+  \degree{信息与通信工程 \textbullet 本科}
+}
+
+\begin{document}
+\makeheader
+
+\sectionTitle{教育背景}{\faGraduationCap}
+%======================================================================
+\begin{educations}
+  \education%
+    {2028.06}%
+    [2024.09]%
+    {电子科技大学~\tag{985}}%
+    {信息与通信学院}%
+    {信息与通信工程}%
+    {本科}
+\end{educations}
+\begin{itemize}
+  \item \textbf{信通协技术部骨干}：负责学院技术活动的组织与技术支持
+  \item \textbf{挑战者杯“揭榜挂帅”全国一等奖}：在国家级竞赛中代表学校取得顶尖成绩
+  \item \textbf{开源贡献}：参与 GitHub 开源项目“九齿”的算子性能优化项目，提升了算子的计算效率
+\end{itemize}
+
+\sectionTitle{项目经历}{\faBriefcase}
+%======================================================================
+\begin{projects}
+  \project%
+    {2026.01}%
+    [2026.03]%
+    {后端开发负责人}%
+    {分布式 / 微服务}%
+    {\large 拼团营销交易系统}%
+    {\textbf{项目描述：}基于微服务架构与 \textbf{DDD 思想} 构建的商品营销平台，旨在支持满减、折扣等多种营销玩法的灵活组合与分发管理。 \\
+    \textbf{核心技术：}SpringBoot、MyBatis、MySQL、Guava、Redis、RabbitMQ、DCC、Prometheus、Docker
+    \vspace{0.5ex} \\ \textbf{核心职责：}
+    \begin{itemize}
+      \item \textbf{营销规则引擎设计}：面对不断增加的营销玩法导致的逻辑臃肿问题，应用责任链与策略模式构建了活动校验框架，并通过线程池并行加载业务试算数据，有效降低了代码耦合度并显著缩短了接口响应耗时。
+      \item \textbf{高并发库存扣减优化}：针对高并发场景下的超卖问题与数据库行锁瓶颈，采用了基于数据库原子更新结合团维度分段锁的扣减机制，并辅以唯一索引防重。在摒弃了复杂的 Redis 依赖前提下，有效缓解了写压力并保障了极高的数据一致性。
+      \item \textbf{多级读缓存防护体系}：为了应对大促期间的突发读流量，搭建了“主动预热 + 本地/Redis 多级缓存 + 数据库兜底”的查询链路，并接入 DCC 配置中心实现限流规则的动态下发，保障了系统在流量洪峰下的稳定运行。
+      \item \textbf{海量用户标签过滤}：在受邀客群及活动可见性判定场景中，利用 Redis Bitmap 结构存储用户状态以压缩内存占用，并搭配定时任务异步刷新数据，实现了单次检索 O(1) 复杂度的判断，显著节省了服务器内存消耗。
+      \item \textbf{系统解耦与状态补偿}：为兼容不同内部系统的调用需求并防止订单结算数据遗漏，设计了 HTTP 与 MQ 双重接入模式；搭建了“异步消息驱动 + 定时任务兜底对齐”机制，并引入分布式锁避免重试冲突，确保了任务的最终一致性。
+    \end{itemize}}
+
+  \separator{1.0ex}
+
+  \project%
+    {2025.11}%
+    [2026.01]%
+    {后端开发负责人}%
+    {AI / 智能体中台}%
+    {\large Ai Agent 可编排系统}%
+    {\textbf{项目描述：}基于 \textbf{Spring AI} 与分层架构构建的企业级智能体中台，旨在提供标准化的大模型服务、灵活的工作流调度以及专属知识库检索 (RAG) 能力。 \\
+    \textbf{核心技术：}Spring AI, SpringBoot, MyBatis, MySQL, PostgreSQL (PGVector), Redis, React, Docker
+    \vspace{0.5ex} \\ \textbf{核心职责：}
+    \begin{itemize}
+      \item \textbf{多元化执行调度引擎}：为满足多样化的业务调度需求，设计了自主规划 (Auto)、工作流编排 (Flow) 和固定链路 (Fixed) 三种执行模式。通过策略模式实现内部路由自动切换，使系统能灵活适配不同应用场景。
+      \item \textbf{工作流执行状态控制}：针对大模型在长链路任务中容易产生幻觉或异常中断的问题，构建了“分析-执行-评审”的循环验证机制。通过允许 Agent 动态进行多分支重试跳转，有效提高了复杂任务的最终完成率。
+      \item \textbf{RAG 知识库检索增强}：为提高大模型对应专业领域领域问题回答的准确性，基于 PGVector 构建底层向量知识库，集成 Tika 自动化清洗多格式文档，并引入业务切面标签进行前置过滤，改善了长上下文下的检索召回率。
+      \item \textbf{动态工具预热与挂载}：为解决原生框架中扩展工具繁杂的痛点，应用工厂模式搭建了统一的模型与工具装配中心。将内部微服务组件与第三方 API 抽象为标准化插件供执行引擎按需加载配置，降低了新功能的接入成本。
+      \item \textbf{智能监控报警闭环系统}：为了缩短系统线上故障的响应时间，基于 MCP (Model Context Protocol) 规范打通了 Agent 平台与 Prometheus 监控平台。实现了服务异常的实时感知与自动化诊断初步排查，并集成微信通知形成运维闭环。
+    \end{itemize}}
+\end{projects}
+
+\sectionTitle{专业技能}{\faWrench}
+%======================================================================
+\begin{competences}[8.5em]
+  \comptence{Java 基础与框架}{%
+    牢固的 Java 基础，熟练应用并发编程与核心集合框架；熟悉 \textbf{Spring Boot / Spring Cloud} 微服务技术开发，拥有服务注册、限流降级的实战经验。
+  }
+  \comptence{数据库与中间件}{%
+    熟悉 \textbf{Redis} 核心数据结构与常见缓存问题的解决方案；了解 MySQL 数据库与索引机制；掌握 \textbf{RabbitMQ} 在分布式场景下的异步解耦应用。
+  }
+  \comptence{架构设计与模式}{%
+    了解 \textbf{DDD（领域驱动设计）} 思想与常规的分层架构；能够在实践中合理运用策略、责任链、工厂等经典设计模式对复杂业务进行重构与解耦。
+  }
+  \comptence{AI 与前沿技术}{%
+    熟悉基于 \textbf{Spring AI} 的 \textbf{RAG} 与 \textbf{Agentic Workflow} 开发范式；了解 \textbf{MCP} 协议原理，能够将大模型能力结合到实际业务需求中。
+  }
+\end{competences}
+
+\end{document}

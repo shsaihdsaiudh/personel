@@ -84,6 +84,15 @@ const { items } = Astro.props;
               >
                 {item.description}
               </p>
+              {item.highlights && item.highlights.length > 0 && (
+                <div class="flex flex-wrap gap-1.5 mt-3">
+                  {item.highlights.map((h) => (
+                    <span class="tag-chip" style="color: var(--color-accent); border-color: var(--color-accent);">
+                      {h}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
           </li>
         ))

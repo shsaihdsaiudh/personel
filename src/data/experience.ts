@@ -7,35 +7,21 @@ export interface ExperienceItem {
   role: string;
   /** 简短描述 */
   description: string;
+  /** 高亮标签（可选） */
+  highlights?: string[];
 }
 
 export const experiences: ExperienceItem[] = [
   {
-    time: "2025.06 – 2025.09",
-    organization: "腾讯科技",
-    role: "前端开发实习生",
+    time: "2024.09 – 2028.06",
+    organization: "电子科技大学",
+    role: "信息与通信工程 · 本科",
     description:
-      "参与内部组件库的维护与迭代，使用 React + TypeScript 开发了 3 个通用业务组件，覆盖率达 90%+。",
-  },
-  {
-    time: "2024.12 – 2025.04",
-    organization: "字节跳动",
-    role: "全栈开发实习生",
-    description:
-      "负责抖音创作者平台部分后端接口开发，基于 Node.js 优化 API 响应延迟 30%。",
-  },
-  {
-    time: "2023.09 – 2026.06",
-    organization: "北京大学",
-    role: "计算机科学与技术 · 硕士",
-    description:
-      "研究方向为分布式系统与云计算，GPA 3.8/4.0，发表 CCF-A 类论文一篇。",
-  },
-  {
-    time: "2019.09 – 2023.06",
-    organization: "华中科技大学",
-    role: "软件工程 · 学士",
-    description:
-      "核心课程包括数据结构、操作系统、计算机网络，获国家奖学金。",
+      "985 高校，信息与通信工程学院。在校期间深入参与技术实践与竞赛，积累了扎实的工程基础与团队协作经验。",
+    highlights: [
+      "信通协技术部骨干",
+      '挑战者杯「揭榜挂帅」全国一等奖',
+      'GitHub 开源项目「九齿」算子优化贡献者',
+    ],
   },
 ];

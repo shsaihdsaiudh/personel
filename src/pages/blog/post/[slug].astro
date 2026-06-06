@@ -1,0 +1,157 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import Layout from "../../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props;
+---
+
+<Layout
+  title={`${post.data.title} — 杨晔塬`}
+  description={post.data.description}
+  slug={`blog/post/${post.id}`}
+  ogType="article"
+>
+  <article
+    class="relative max-w-3xl mx-auto px-5 sm:px-8 pt-16 sm:pt-24 pb-16 sm:pb-24
+           animate-fade-in-up animate-section-1"
+  >
+    <!-- Back link -->
+    <a
+      href="/blog"
+      class="inline-flex items-center gap-2 mb-10 text-sm link-underline"
+      style="color: var(--color-text-muted);"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      <span>Journal</span>
+    </a>
+
+    <!-- Article header -->
+    <header class="mb-12">
+      <!-- Meta -->
+      <div class="flex flex-wrap items-center gap-3 mb-5">
+        <time
+          class="text-xs tracking-[0.14em] uppercase"
+          style="color: var(--color-text-muted);"
+        >
+          {post.data.date.toLocaleDateString("zh-CN", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+          })}
+        </time>
+        {post.data.updated && (
+          <span
+            class="text-xs tracking-[0.14em] uppercase"
+            style="color: var(--color-text-faint);"
+          >
+            · Updated{" "}
+            {post.data.updated.toLocaleDateString("zh-CN", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+            })}
+          </span>
+        )}
+      </div>
+
+      <!-- Title -->
+      <h1
+        class="font-display text-3xl sm:text-4xl md:text-5xl leading-tight tracking-tight mb-5"
+        style="color: var(--color-text); font-weight: 500;"
+      >
+        {post.data.title}
+      </h1>
+
+      <!-- Description (subtitle) -->
+      <p
+        class="text-base sm:text-lg leading-relaxed mb-5"
+        style="color: var(--color-text-soft);"
+      >
+        {post.data.description}
+      </p>
+
+      <!-- Tags -->
+      {post.data.tags.length > 0 && (
+        <div class="flex flex-wrap gap-1.5">
+          {post.data.tags.map((tag) => (
+            <a href={`/blog#tag-${tag}`} class="tag-chip no-underline">
+              {tag}
+            </a>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <!-- Divider -->
+    <hr
+      class="mb-12"
+      style="border: none; border-top: 1px solid var(--color-border);"
+    />
+
+    <!-- Article body -->
+    <div class="prose-custom" set:html={post.rendered?.html ?? ""}>
+    </div>
+
+    <!-- Footer nav -->
+    <hr
+      class="mt-16 mb-8"
+      style="border: none; border-top: 1px solid var(--color-border);"
+    />
+    <div class="flex items-center justify-between">
+      <a
+        href="/blog"
+        class="inline-flex items-center gap-2 text-sm link-underline"
+        style="color: var(--color-text-muted);"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        <span>All posts</span>
+      </a>
+      <span
+        class="text-xs tracking-[0.14em] uppercase"
+        style="color: var(--color-text-faint);"
+      >
+        Journal
+      </span>
+    </div>
+  </article>
+</Layout>

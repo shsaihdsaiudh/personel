@@ -13,32 +13,33 @@ export interface ProjectItem {
 
 export const projects: ProjectItem[] = [
   {
-    name: "MiniGit",
+    name: "拼团营销交易系统",
     description:
-      "用 TypeScript 实现的简化版 Git 版本控制系统，支持 init、add、commit、branch、merge 等核心命令。",
-    techStack: ["TypeScript", "Node.js", "OOP"],
-    link: "https://github.com",
-    linkText: "GitHub",
-  },
-  {
-    name: "ChatVault",
-    description:
-      "AI 驱动的聊天记录分析与归档工具，支持全文检索和语义摘要，日均处理 10k+ 条消息。",
-    techStack: ["Python", "LangChain", "PostgreSQL", "React"],
-    link: "https://github.com",
-  },
-  {
-    name: "个人主页",
-    description:
-      "极简黑白风格的个人主页，基于 Astro + Tailwind CSS 构建，Lighthouse 评分 100。",
-    techStack: ["Astro", "Tailwind CSS", "TypeScript"],
+      "基于微服务架构与 DDD 思想构建的商品营销平台，支持满减、折扣等多种营销玩法的灵活组合与分发管理。通过责任链+策略模式构建活动校验框架，采用数据库原子更新+团维度分段锁实现高并发库存扣减，搭建预热+多级缓存+限流防护体系保障大促流量洪峰下的稳定性。",
+    techStack: [
+      "SpringBoot",
+      "MyBatis",
+      "MySQL",
+      "Redis",
+      "RabbitMQ",
+      "Docker",
+      "Prometheus",
+    ],
     link: "https://github.com",
   },
   {
-    name: "PulseDash",
+    name: "AI Agent 可编排系统",
     description:
-      "轻量级实时监控面板，使用 WebSocket 推送服务指标，支持自定义告警规则和图表面板。",
-    techStack: ["Go", "Svelte", "WebSocket", "Docker"],
+      "基于 Spring AI 与分层架构构建的企业级智能体中台，提供标准化大模型服务、灵活工作流调度及 RAG 知识库检索能力。设计自主规划/工作流编排/固定链路三种执行模式，构建「分析-执行-评审」循环验证机制，基于 PGVector 构建向量知识库并集成 Tika 自动化文档清洗。",
+    techStack: [
+      "Spring AI",
+      "SpringBoot",
+      "PostgreSQL",
+      "PGVector",
+      "Redis",
+      "React",
+      "Docker",
+    ],
     link: "https://github.com",
   },
 ];
