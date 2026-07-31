@@ -19,7 +19,7 @@
 
 \photo[shape=square, position=left]{4.0em}{杨晔塬.png}
 
-\keywords{Java, Spring Cloud, DDD, Redis, AI Agent, RAG}
+\keywords{AI Agent, LangGraph, Multi-Agent, Java, Spring Cloud, DDD, Redis, RAG}
 
 % \tagline{\texorpdfstring{\icon{\faBinoculars} }{}<position-to-look-for>}
 % \tagline{<current-position>}
@@ -50,6 +50,27 @@
   \item \textbf{挑战者杯“揭榜挂帅”全国一等奖}：在国家级竞赛中代表学校取得顶尖成绩
   \item \textbf{开源贡献}：参与 GitHub 开源项目“九齿”的算子性能优化项目，提升了算子的计算效率
 \end{itemize}
+
+\sectionTitle{实习经历}{\faBuilding}
+%======================================================================
+\begin{projects}
+  \project%
+    {2026.05}%
+    [至今]%
+    {AI Agent 开发实习}%
+    {Agent Runtime / 工作流基建}%
+    {\large 腾讯~\tag{IEG}}%
+    {\textbf{项目描述：}负责面向 \textbf{UE 建筑资产生成} 的长时 Agent 执行与评测框架建设。单次任务运行时长逾 1 小时，需支撑多任务并发执行；框架由本人从零搭建，现已由团队同事实际使用并持续迭代。 \\
+    \textbf{核心技术：}LangGraph、DeepAgent、Python、LangSmith、Unreal Engine、Multi-Agent
+    \vspace{0.5ex} \\ \textbf{核心职责：}
+    \begin{itemize}
+      \item \textbf{混合架构编排设计}：初期方案由单个父 DeepAgent 全权调度，但存在跳过 QC、执行顺序不可控、产物提前落盘、失败后难以恢复等问题。改为 \textbf{LangGraph 承担确定性流程编排 + DeepAgent 仅负责需模型判断的环节}，形成 Producer $\rightarrow$ QC $\rightarrow$ 纯代码 Router 的分层结构，将不确定性收敛在可控边界内。
+      \item \textbf{事务性产物与重试控制}：针对长链路任务中产物污染与无限重试问题，设计 QC 通过前不正式落盘的事务性产物机制，并对重试次数设置硬上限，配合 Router 的 passed / retry / failed 三态判定，避免脏数据进入下游节点。
+      \item \textbf{长任务恢复与局部重跑}：识别出核心痛点并非 Agent 能否完成任务，而是用户仅对中间某步不满意时如何避免整链路重跑。基于节点状态 checkpoint、中间产物版本管理与下游依赖失效判定，实现从指定节点恢复执行的增量更新能力。
+      \item \textbf{观测与真实环境回归}：接入 LangSmith 轨迹观测定位流程堵点，建立“真实 UE 流程运行 $\rightarrow$ 日志与截图结果评估 $\rightarrow$ 回归验证 $\rightarrow$ 修复或回退”的迭代闭环，并探索将非文本产物（截图、运行状态）纳入自动化评测。
+      \item \textbf{Agent 行为约束}：针对子 Agent 重复调用同一工具导致的资源浪费，设计软限制（提示模型自我纠正）与硬限制（超阈值后暂停或中止）双层防护，提升长任务的执行效率与可预测性。
+    \end{itemize}}
+\end{projects}
 
 \sectionTitle{项目经历}{\faBriefcase}
 %======================================================================
@@ -103,8 +124,8 @@
   \comptence{架构设计与模式}{%
     了解 \textbf{DDD（领域驱动设计）} 思想与常规的分层架构；能够在实践中合理运用策略、责任链、工厂等经典设计模式对复杂业务进行重构与解耦。
   }
-  \comptence{AI 与前沿技术}{%
-    熟悉基于 \textbf{Spring AI} 的 \textbf{RAG} 与 \textbf{Agentic Workflow} 开发范式；了解 \textbf{MCP} 协议原理，能够将大模型能力结合到实际业务需求中。
+  \comptence{AI 与 Agent 工程}{%
+    具备 \textbf{Multi-Agent} 系统落地经验，熟悉 \textbf{LangGraph} 流程编排与 Agent 执行时的状态管理、检查点恢复与失败重试设计；熟悉基于 \textbf{Spring AI} 的 \textbf{RAG} 与 \textbf{Agentic Workflow} 开发范式，了解 \textbf{MCP} 协议原理。
   }
 \end{competences}
 
