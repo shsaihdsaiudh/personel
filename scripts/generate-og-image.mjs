@@ -4,17 +4,29 @@ import { dirname, resolve } from 'node:path';
 const WIDTH = 1200;
 const HEIGHT = 630;
 
+const BORDER = 12;
+const YELLOW = '#ffe44d';
+const INK = '#0a0a0a';
+const PAPER = '#fffcf2';
+
+// Neo-brutalist OG card: paper ground, offset yellow panel, hard black shadow.
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${WIDTH}" height="${HEIGHT}" viewBox="0 0 ${WIDTH} ${HEIGHT}">
-  <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
-    </linearGradient>
-  </defs>
-  <rect width="${WIDTH}" height="${HEIGHT}" fill="url(#bg)" />
-  <text x="${WIDTH / 2}" y="260" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="bold" fill="#e2e8f0" text-anchor="middle">Personel</text>
-  <text x="${WIDTH / 2}" y="350" font-family="system-ui, -apple-system, sans-serif" font-size="28" fill="#94a3b8" text-anchor="middle">全栈开发者 / 开源爱好者</text>
-  <text x="${WIDTH / 2}" y="440" font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#64748b" text-anchor="middle">A minimalist personal homepage.</text>
+  <rect width="${WIDTH}" height="${HEIGHT}" fill="${PAPER}" />
+
+  <!-- hard shadow of the main panel -->
+  <rect x="106" y="116" width="1000" height="420" fill="${INK}" />
+  <!-- main yellow panel -->
+  <rect x="90" y="100" width="1000" height="420" fill="${YELLOW}" stroke="${INK}" stroke-width="${BORDER}" />
+
+  <text x="140" y="185" font-family="'JetBrains Mono', monospace" font-size="24" font-weight="700" letter-spacing="6" fill="${INK}">HELLO — 我是</text>
+  <text x="140" y="330" font-family="'Space Grotesk', system-ui, sans-serif" font-size="140" font-weight="700" fill="${INK}">杨晔塬</text>
+  <text x="140" y="408" font-family="'Space Grotesk', system-ui, sans-serif" font-size="50" font-weight="700" fill="${INK}">AI AGENT 开发 · 腾讯实习</text>
+  <text x="140" y="468" font-family="'JetBrains Mono', monospace" font-size="21" font-weight="500" letter-spacing="2" fill="${INK}">LANGGRAPH · 多智能体编排 · 电子科技大学</text>
+
+  <!-- accent blocks bottom-right -->
+  <rect x="880" y="556" width="60" height="44" fill="#2e6ff2" stroke="${INK}" stroke-width="6" />
+  <rect x="950" y="556" width="60" height="44" fill="#ff4d3d" stroke="${INK}" stroke-width="6" />
+  <rect x="1020" y="556" width="60" height="44" fill="#22c55e" stroke="${INK}" stroke-width="6" />
 </svg>`;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

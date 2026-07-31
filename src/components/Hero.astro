@@ -1,159 +1,173 @@
 ---
-// Hero.astro — Editorial × Quiet Luxury
+// Hero.astro — Neo-brutalism
 ---
 
 <section
-  class="relative max-w-5xl mx-auto px-5 sm:px-8 pt-20 sm:pt-28 md:pt-36 pb-16 sm:pb-24
-         animate-fade-in-up animate-section-1"
+  class="relative max-w-5xl mx-auto px-5 sm:px-8 pt-12 sm:pt-16 pb-12 sm:pb-16"
 >
-  <!-- Eyebrow -->
-  <div class="flex items-center justify-between mb-10 sm:mb-14">
-    <span class="eyebrow">— Portfolio · MMXXVI</span>
-    <span class="status-pill">
+  <!-- 顶部标签行 -->
+  <div class="flex flex-wrap items-center justify-between gap-3 mb-8 nb-pop nb-delay-1">
+    <span class="nb-label">Portfolio · 2026</span>
+    <span class="nb-status">
       <span class="dot" aria-hidden="true"></span>
       Open to opportunities
     </span>
   </div>
 
-  <!-- Main split: name on left, meta on right -->
-  <div class="grid grid-cols-12 gap-6 sm:gap-10 items-end">
-    <!-- Avatar — overlapping decorative element -->
-    <div class="col-span-12 md:col-span-3 order-2 md:order-1 flex md:block justify-center">
-      <div class="avatar-frame relative">
-        <div
-          class="
-            relative w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36
-            rounded-full overflow-hidden
-            flex items-center justify-center
-          "
-          style="
-            background: linear-gradient(140deg, var(--color-surface) 0%, var(--color-bg-soft) 100%);
-            border: 1px solid var(--color-border-strong);
-            box-shadow: 0 30px 60px -20px var(--color-shadow-lg);
-          "
-        >
-          <!-- Monogram fallback -->
-          <span
-            class="font-display text-5xl sm:text-6xl font-light italic"
-            style="color: var(--color-text); letter-spacing: -0.02em;"
-          >
-            杨
-          </span>
-          <span
-            class="absolute bottom-3 right-3 w-2.5 h-2.5 rounded-full"
-            style="background: var(--color-accent); box-shadow: 0 0 10px var(--color-accent-glow);"
-            aria-hidden="true"
-          ></span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Name + tagline -->
-    <div class="col-span-12 md:col-span-9 order-1 md:order-2">
-      <h1
-        class="font-display leading-[0.95] tracking-tight"
-        style="color: var(--color-text); font-weight: 400;"
-      >
-        <span
-          class="block text-[clamp(2.6rem,9vw,6.5rem)]"
-          style="font-weight: 500;"
-        >
-          杨晔塬<span style="color: var(--color-accent);">.</span>
-        </span>
-      </h1>
-
-      <!-- Tagline -->
+  <!-- 主标题块：黄底黑边大方块，名字撑满 -->
+  <div class="nb-pop nb-delay-2">
+    <div
+      class="nb-box nb-shadow px-5 sm:px-8 py-7 sm:py-10"
+      style="background: var(--nb-yellow);"
+    >
       <p
-        class="mt-6 sm:mt-8 text-base sm:text-lg md:text-xl max-w-xl leading-relaxed"
-        style="color: var(--color-text-soft);"
+        class="font-mono text-[0.7rem] sm:text-xs font-bold tracking-[0.2em] uppercase mb-3"
+        style="color: #0a0a0a;"
       >
-        Java 后端开发者 · 电子科技大学在读。
-        <span style="color: var(--color-text-muted);">
-          专注于分布式系统与 AI Agent 技术，在代码与架构之间寻找工程之美。
-        </span>
+        Hello — 我是
+      </p>
+      <h1
+        class="font-display text-[clamp(3rem,13vw,7.5rem)] leading-[0.85]"
+        style="color: #0a0a0a;"
+      >
+        杨晔塬
+      </h1>
+      <p
+        class="font-display text-[clamp(1.1rem,3.4vw,2rem)] mt-3 leading-tight"
+        style="color: #0a0a0a;"
+      >
+        AI AGENT / 后端开发
       </p>
     </div>
   </div>
 
-  <!-- Meta strip: location · role · time -->
+  <!-- 简介 + 快捷按钮，错位叠在主块下方 -->
   <div
-    class="mt-12 sm:mt-16 grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-4 sm:gap-x-8"
-    style="border-top: 1px solid var(--color-border); padding-top: 1.75rem;"
+    class="mt-6 sm:mt-8 grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 nb-pop nb-delay-3"
   >
-    <div>
-      <div class="eyebrow mb-2" style="--tw-text-opacity: 1;">Based in</div>
-      <div
-        class="font-display text-base sm:text-lg"
-        style="color: var(--color-text);"
+    <div class="md:col-span-2 nb-box nb-shadow px-5 sm:px-7 py-5 sm:py-6">
+      <p
+        class="text-[0.95rem] sm:text-base leading-relaxed"
+        style="color: var(--color-text-soft);"
       >
-        Chengdu, CN
-      </div>
-    </div>
-    <div>
-      <div class="eyebrow mb-2">Role</div>
-      <div
-        class="font-display text-base sm:text-lg"
-        style="color: var(--color-text);"
-      >
-        Backend Engineer
-      </div>
-    </div>
-    <div>
-      <div class="eyebrow mb-2">Currently</div>
-      <div
-        class="font-display text-base sm:text-lg"
-        style="color: var(--color-text);"
-      >
-        UESTC · 985
-      </div>
-    </div>
-    <div>
-      <div class="eyebrow mb-2">Reach me</div>
-      <div class="flex items-center gap-1 -ml-2">
+        电子科技大学 · 信息与通信工程在读，现于
+        <span class="nb-mark font-bold">腾讯</span>
+        做
+        <span
+          class="nb-mark font-bold"
+          style="background: var(--nb-blue); color: #fff;">AI Agent 开发</span
+        >。做长时 Agent 的执行框架、流程编排与状态恢复，也关心推理 Infra 与后训练。
+      </p>
+
+      <div class="flex flex-wrap items-center gap-3 mt-5">
         <a
           href="https://github.com/shsaihdsaiudh"
           target="_blank"
           rel="noopener noreferrer"
-          class="icon-btn"
-          aria-label="GitHub"
+          class="nb-btn nb-btn-primary"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
+            width="15"
+            height="15"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="1.6"
+            stroke-width="2.2"
             stroke-linecap="round"
             stroke-linejoin="round"
+            aria-hidden="true"
           >
             <path
               d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
             ></path>
             <path d="M9 18c-4.51 2-5-2-7-2"></path>
           </svg>
+          <span>GitHub</span>
         </a>
-        <a
-          href="mailto:2776079516@qq.com"
-          class="icon-btn"
-          aria-label="Email"
-        >
+        <a href="mailto:2776079516@qq.com" class="nb-btn">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
+            width="15"
+            height="15"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="1.6"
+            stroke-width="2.2"
             stroke-linecap="round"
             stroke-linejoin="round"
+            aria-hidden="true"
           >
-            <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+            <rect width="20" height="16" x="2" y="4"></rect>
             <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
           </svg>
+          <span>Email</span>
         </a>
+        <a href="/blog" class="nb-btn">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="15"
+            height="15"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+            ></path>
+          </svg>
+          <span>Journal</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 信息卡：三条并排的实心色块 -->
+    <div class="flex flex-col gap-3">
+      <div
+        class="nb-box nb-shadow-sm px-4 py-3"
+        style="background: var(--nb-lilac);"
+      >
+        <div
+          class="font-mono text-[0.62rem] font-bold tracking-[0.16em] uppercase mb-1"
+          style="color: #0a0a0a; opacity: 0.7;"
+        >
+          Currently
+        </div>
+        <div class="font-display text-lg" style="color: #0a0a0a;">
+          腾讯 · 实习
+        </div>
+      </div>
+      <div
+        class="nb-box nb-shadow-sm px-4 py-3"
+        style="background: var(--nb-green);"
+      >
+        <div
+          class="font-mono text-[0.62rem] font-bold tracking-[0.16em] uppercase mb-1"
+          style="color: #0a0a0a; opacity: 0.7;"
+        >
+          School
+        </div>
+        <div class="font-display text-lg" style="color: #0a0a0a;">
+          电子科大 · 985
+        </div>
+      </div>
+      <div
+        class="nb-box nb-shadow-sm px-4 py-3"
+        style="background: var(--nb-red);"
+      >
+        <div
+          class="font-mono text-[0.62rem] font-bold tracking-[0.16em] uppercase mb-1"
+          style="color: #0a0a0a; opacity: 0.7;"
+        >
+          Stack
+        </div>
+        <div class="font-display text-lg" style="color: #0a0a0a;">
+          Agent · Java
+        </div>
       </div>
     </div>
   </div>

@@ -12,7 +12,7 @@ export interface Props {
 
 const {
   title,
-  description = "Editorial-grade personal homepage — quiet luxury for the web.",
+  description = "杨晔塬 — AI Agent 开发，现于腾讯实习。做长时 Agent 执行框架与流程编排。",
   slug = "",
   ogType = "website",
 } = Astro.props;
@@ -21,6 +21,10 @@ const siteUrl = Astro.site?.origin ?? "https://example.com";
 const canonical = slug ? `${siteUrl}/${slug}` : siteUrl;
 const ogImage = `${siteUrl}/og-image.png`;
 
+const currentPath = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === "/" ? currentPath === "/" : currentPath.startsWith(href);
+
 // JSON-LD Person schema
 const jsonLd = {
   "@context": "https://schema.org",
@@ -28,8 +32,12 @@ const jsonLd = {
   name: "杨晔塬",
   url: siteUrl,
   image: ogImage,
-  jobTitle: "Java 后端开发者",
-  description: "Java 后端开发者 / 电子科技大学信息与通信工程 / 分布式系统与 AI Agent",
+  jobTitle: "AI Agent 开发",
+  description: "AI Agent 开发 / 腾讯实习 / 电子科技大学信息与通信工程 / 长时 Agent 执行框架与流程编排",
+  worksFor: {
+    "@type": "Organization",
+    name: "腾讯",
+  },
   sameAs: ["https://github.com/shsaihdsaiudh"],
 };
 ---
@@ -45,7 +53,7 @@ const jsonLd = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#f5f1ea" />
+    <meta name="theme-color" content="#fffcf2" />
     <meta name="color-scheme" content="light dark" />
 
     <!-- Canonical URL -->
@@ -60,7 +68,7 @@ const jsonLd = {
     <meta property="og:image:alt" content={title} />
     <meta property="og:url" content={canonical} />
     <meta property="og:type" content={ogType} />
-    <meta property="og:site_name" content={title} />
+    <meta property="og:site_name" content="杨晔塬" />
     <meta property="og:locale" content="zh_CN" />
 
     <!-- Twitter Card -->
@@ -70,11 +78,11 @@ const jsonLd = {
     <meta name="twitter:image" content={ogImage} />
     <meta name="twitter:image:alt" content={title} />
 
-    <!-- Fonts: Fraunces (display serif) + Inter (text) -->
+    <!-- Fonts: Space Grotesk (display) + JetBrains Mono (labels / code) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
 
@@ -102,100 +110,96 @@ const jsonLd = {
   </head>
 
   <body class="flex flex-col min-h-screen relative">
-    <!-- Ambient layers -->
-    <div class="aurora" aria-hidden="true"></div>
-    <div class="aurora-extra" aria-hidden="true"></div>
-    <div class="grain" aria-hidden="true"></div>
+    <!-- 网格纸背景 -->
+    <div class="nb-grid" aria-hidden="true"></div>
 
     <!-- Header -->
     <header
-      class="sticky top-0 z-20 transition-all duration-500"
-      style="background: color-mix(in srgb, var(--color-bg) 70%, transparent); backdrop-filter: blur(16px) saturate(1.1); border-bottom: 1px solid var(--color-border);"
+      class="sticky top-0 z-20"
+      style="background: var(--color-bg); border-bottom: var(--nb-border-w) solid var(--color-ink);"
     >
       <div
-        class="max-w-5xl mx-auto px-5 sm:px-8 py-4 flex items-center justify-between"
+        class="max-w-5xl mx-auto px-5 sm:px-8 py-3 flex items-center justify-between gap-3"
       >
-        <!-- Monogram logo -->
-        <a
-          href="/"
-          class="group inline-flex items-center gap-2.5 no-underline"
-          aria-label="Home"
-        >
+        <!-- 实心方块字标 -->
+        <a href="/" class="flex items-center gap-2.5" aria-label="首页">
           <span
-            class="inline-flex items-center justify-center w-8 h-8 rounded-full font-display text-[0.95rem] font-medium"
-            style="border: 1px solid var(--color-border-strong); color: var(--color-text);"
+            class="inline-flex items-center justify-center w-9 h-9 shrink-0 font-display text-lg"
+            style="border: var(--nb-border-w) solid var(--color-ink); background: var(--nb-red); color: #0a0a0a; box-shadow: 3px 3px 0 0 var(--color-ink);"
           >
-            <span style="color: var(--color-accent);">杨</span>
+            杨
           </span>
-          <span
-            class="font-display text-[0.95rem] tracking-wide hidden sm:inline-block"
-            style="color: var(--color-text);"
-          >
-            杨晔塬
+          <span class="hidden sm:flex flex-col leading-none">
             <span
-              class="ml-1 text-[0.7rem] tracking-[0.2em] uppercase"
-              style="color: var(--color-text-muted); font-family: 'Inter', sans-serif;"
+              class="font-display text-base"
+              style="color: var(--color-text);"
             >
-              · UESTC
+              杨晔塬
+            </span>
+            <span
+              class="font-mono text-[0.6rem] tracking-[0.18em] uppercase mt-1"
+              style="color: var(--color-text-muted);"
+            >
+              Agent Dev
             </span>
           </span>
         </a>
 
-        <div class="flex items-center gap-1 sm:gap-3">
-          <nav
-            class="hidden sm:flex items-center gap-7 text-[0.78rem] tracking-[0.16em] uppercase"
-            style="color: var(--color-text-muted); font-weight: 500;"
-          >
-            <a href="/" class="link-underline">Index</a>
-            <a href="/about" class="link-underline">About</a>
-            <a href="/blog" class="link-underline">Journal</a>
+        <div class="flex items-center gap-2 sm:gap-3">
+          <nav class="flex items-center gap-1 sm:gap-2">
+            <a
+              href="/"
+              class="nb-nav-link"
+              aria-current={isActive("/") ? "page" : undefined}>Index</a
+            >
+            <a
+              href="/blog"
+              class="nb-nav-link"
+              aria-current={isActive("/blog") ? "page" : undefined}>Journal</a
+            >
             <a
               href="mailto:2776079516@qq.com"
-              class="link-underline"
-              style="color: var(--color-text);"
+              class="nb-nav-link hidden sm:inline-block">Contact</a
             >
-              Contact
-            </a>
           </nav>
 
           <!-- 主题切换按钮 -->
           <button
             id="theme-toggle"
-            class="theme-toggle-btn ml-2 sm:ml-4"
+            class="nb-theme-btn"
             aria-label="切换主题"
             title="切换亮色/暗色主题"
           >
             <svg
               class="icon-sun"
               xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
+              width="17"
+              height="17"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="1.5"
+              stroke-width="2.5"
               stroke-linecap="round"
-              stroke-linejoin="round"
             >
-              <circle cx="12" cy="12" r="5"></circle>
-              <line x1="12" y1="1" x2="12" y2="3"></line>
-              <line x1="12" y1="21" x2="12" y2="23"></line>
-              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-              <line x1="1" y1="12" x2="3" y2="12"></line>
-              <line x1="21" y1="12" x2="23" y2="12"></line>
-              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+              <circle cx="12" cy="12" r="4"></circle>
+              <line x1="12" y1="2" x2="12" y2="4"></line>
+              <line x1="12" y1="20" x2="12" y2="22"></line>
+              <line x1="4.9" y1="4.9" x2="6.3" y2="6.3"></line>
+              <line x1="17.7" y1="17.7" x2="19.1" y2="19.1"></line>
+              <line x1="2" y1="12" x2="4" y2="12"></line>
+              <line x1="20" y1="12" x2="22" y2="12"></line>
+              <line x1="4.9" y1="19.1" x2="6.3" y2="17.7"></line>
+              <line x1="17.7" y1="6.3" x2="19.1" y2="4.9"></line>
             </svg>
             <svg
               class="icon-moon"
               xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
+              width="17"
+              height="17"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="1.5"
+              stroke-width="2.5"
               stroke-linecap="round"
               stroke-linejoin="round"
             >
@@ -212,43 +216,38 @@ const jsonLd = {
     </main>
 
     <!-- Footer -->
-    <footer
-      class="mt-20 sm:mt-32 relative"
-      style="border-top: 1px solid var(--color-border);"
-    >
-      <!-- Marquee signature -->
-      <div
-        class="overflow-hidden py-10 sm:py-14"
-        style="border-bottom: 1px solid var(--color-border);"
-      >
+    <footer class="mt-16 sm:mt-24">
+      <!-- 黄底跑马灯横幅 -->
+      <div class="nb-band py-3">
         <div
-          class="marquee font-display text-5xl sm:text-7xl md:text-8xl"
-          style="color: var(--color-text); opacity: 0.92; font-weight: 300; font-style: italic;"
+          class="marquee font-mono text-sm sm:text-base font-bold uppercase tracking-[0.1em]"
           aria-hidden="true"
         >
-          <span>Crafted with intent</span>
-          <span style="color: var(--color-accent);">✦</span>
-          <span>Designed in silence</span>
-          <span style="color: var(--color-accent);">✦</span>
-          <span>Crafted with intent</span>
-          <span style="color: var(--color-accent);">✦</span>
-          <span>Designed in silence</span>
-          <span style="color: var(--color-accent);">✦</span>
+          <span>Build it loud</span>
+          <span>◆</span>
+          <span>Ship it hard</span>
+          <span>◆</span>
+          <span>No rounded corners</span>
+          <span>◆</span>
+          <span>Build it loud</span>
+          <span>◆</span>
+          <span>Ship it hard</span>
+          <span>◆</span>
+          <span>No rounded corners</span>
+          <span>◆</span>
         </div>
       </div>
 
       <div
-        class="max-w-5xl mx-auto px-5 sm:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[0.72rem] tracking-[0.16em] uppercase"
+        class="max-w-5xl mx-auto px-5 sm:px-8 py-7 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[0.68rem] tracking-[0.12em] uppercase"
         style="color: var(--color-text-muted);"
       >
-        <span>
-          &copy; {new Date().getFullYear()} — All rights reserved
-        </span>
+        <span>&copy; {new Date().getFullYear()} 杨晔塬</span>
         <span class="flex items-center gap-2">
           <span
-            class="inline-block w-1 h-1 rounded-full"
-            style="background: var(--color-accent);"></span>
-          Made with care · v1.0
+            class="inline-block w-2 h-2"
+            style="background: var(--nb-blue);"></span>
+          Astro + Tailwind · v2.0
         </span>
       </div>
     </footer>

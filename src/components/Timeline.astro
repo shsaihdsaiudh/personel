@@ -6,75 +6,60 @@ interface Props {
 }
 
 const { items } = Astro.props;
+
+// 循环用的强调色，让每条经历的时间块颜色不同
+const accents = ["var(--nb-blue)", "var(--nb-red)", "var(--nb-green)", "var(--nb-lilac)"];
 ---
 
-<section
-  class="relative max-w-5xl mx-auto px-5 sm:px-8 py-16 sm:py-24
-         animate-fade-in-up animate-section-2"
->
+<section class="relative max-w-5xl mx-auto px-5 sm:px-8 py-10 sm:py-14">
   <!-- Section header -->
-  <div class="flex items-end justify-between mb-12 sm:mb-16">
+  <div class="flex flex-wrap items-end justify-between gap-4 mb-8 sm:mb-10">
     <div>
-      <span class="eyebrow">— 01 / Experience</span>
+      <span class="nb-label" style="background: var(--nb-lilac);">01 / Experience</span>
       <h2
-        class="font-display mt-3 text-4xl sm:text-5xl md:text-6xl tracking-tight"
-        style="color: var(--color-text); font-weight: 400;"
+        class="font-display mt-4 text-4xl sm:text-5xl md:text-6xl"
+        style="color: var(--color-text);"
       >
-        A path,
-        <span style="font-style: italic; color: var(--color-text-muted);">
-          one chapter at a time.
-        </span>
+        经历
       </h2>
     </div>
     <div
-      class="hidden md:block text-right text-[0.72rem] tracking-[0.2em] uppercase shrink-0 ml-6"
-      style="color: var(--color-text-faint);"
+      class="font-mono text-xs font-bold tracking-[0.16em] uppercase px-3 py-1.5"
+      style="border: var(--nb-border-w) solid var(--color-ink); color: var(--color-text);"
     >
       {items.length.toString().padStart(2, "0")} entries
     </div>
   </div>
 
-  <div class="relative">
-    <!-- Vertical rail (desktop) -->
-    <div class="hidden sm:block timeline-rail" aria-hidden="true"></div>
-
-    <ul class="flex flex-col gap-6 sm:gap-8 animate-stagger-children" role="list">
-      {
-        items.map((item) => (
-          <li
-            class="relative flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-0
-                   animate-fade-in-up"
-          >
-            <!-- Time -->
+  <ul class="flex flex-col gap-5 sm:gap-6 nb-stagger" role="list">
+    {
+      items.map((item, idx) => (
+        <li class="nb-pop">
+          <div class="flex flex-col sm:flex-row sm:items-stretch gap-3 sm:gap-0">
+            <!-- 时间块：实心色块，桌面端贴在卡片左侧 -->
             <div
-              class="
-                shrink-0 sm:w-[9.25rem] sm:pr-10 sm:text-right
-                font-display italic mb-1 sm:mb-0 sm:pt-0.5
-                text-sm sm:text-base
-              "
-              style="color: var(--color-text-muted); letter-spacing: 0.01em;"
+              class="shrink-0 sm:w-40 flex items-center justify-center px-4 py-2 sm:py-0"
+              style={`border: var(--nb-border-w) solid var(--color-ink); background: ${accents[idx % accents.length]}; box-shadow: 3px 3px 0 0 var(--color-ink);`}
             >
-              {item.time}
+              <span
+                class="font-mono text-sm font-bold tracking-[0.06em] text-center"
+                style="color: #0a0a0a;"
+              >
+                {item.time}
+              </span>
             </div>
 
-            <!-- Dot on rail (desktop) -->
-            <span class="hidden sm:block timeline-dot" aria-hidden="true" />
-
-            <!-- Card -->
-            <div
-              class="flex-1 glass-card gradient-border px-5 sm:px-7 py-5 sm:py-6 sm:ml-8"
-            >
-              <div class="flex items-baseline justify-between gap-3 mb-1">
-                <h3
-                  class="font-display text-lg sm:text-xl"
-                  style="color: var(--color-text); font-weight: 500;"
-                >
-                  {item.organization}
-                </h3>
-              </div>
+            <!-- 内容卡片 -->
+            <div class="flex-1 nb-card px-5 sm:px-7 py-5 sm:py-6 sm:ml-5">
+              <h3
+                class="font-display text-xl sm:text-2xl mb-2"
+                style="color: var(--color-text);"
+              >
+                {item.organization}
+              </h3>
               <p
-                class="text-xs sm:text-sm tracking-[0.14em] uppercase mb-3"
-                style="color: var(--color-accent); font-weight: 500;"
+                class="font-mono text-[0.72rem] font-bold tracking-[0.12em] uppercase inline-block px-2 py-0.5 mb-3"
+                style={`border: 2px solid var(--color-ink); background: ${accents[idx % accents.length]}; color: #0a0a0a;`}
               >
                 {item.role}
               </p>
@@ -85,18 +70,16 @@ const { items } = Astro.props;
                 {item.description}
               </p>
               {item.highlights && item.highlights.length > 0 && (
-                <div class="flex flex-wrap gap-1.5 mt-3">
+                <div class="flex flex-wrap gap-2 mt-4">
                   {item.highlights.map((h) => (
-                    <span class="tag-chip" style="color: var(--color-accent); border-color: var(--color-accent);">
-                      {h}
-                    </span>
+                    <span class="nb-tag">{h}</span>
                   ))}
                 </div>
               )}
             </div>
-          </li>
-        ))
-      }
-    </ul>
-  </div>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
 </section>

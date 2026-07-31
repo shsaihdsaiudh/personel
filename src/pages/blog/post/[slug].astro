@@ -24,15 +24,10 @@ const { post } = Astro.props;
   ogType="article"
 >
   <article
-    class="relative max-w-3xl mx-auto px-5 sm:px-8 pt-16 sm:pt-24 pb-16 sm:pb-24
-           animate-fade-in-up animate-section-1"
+    class="relative max-w-3xl mx-auto px-5 sm:px-8 pt-10 sm:pt-14 pb-12 sm:pb-16"
   >
     <!-- Back link -->
-    <a
-      href="/blog"
-      class="inline-flex items-center gap-2 mb-10 text-sm link-underline"
-      style="color: var(--color-text-muted);"
-    >
+    <a href="/blog" class="nb-btn mb-8">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="14"
@@ -40,7 +35,7 @@ const { post } = Astro.props;
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
-        stroke-width="1.8"
+        stroke-width="2.4"
         stroke-linecap="round"
         stroke-linejoin="round"
         aria-hidden="true"
@@ -51,68 +46,74 @@ const { post } = Astro.props;
       <span>Journal</span>
     </a>
 
-    <!-- Article header -->
-    <header class="mb-12">
+    <!-- Article header — 黄底黑边标题块 -->
+    <header
+      class="nb-box nb-shadow px-5 sm:px-7 py-6 sm:py-8 mb-10"
+      style="background: var(--nb-yellow);"
+    >
       <!-- Meta -->
-      <div class="flex flex-wrap items-center gap-3 mb-5">
+      <div class="flex flex-wrap items-center gap-3 mb-4">
         <time
-          class="text-xs tracking-[0.14em] uppercase"
-          style="color: var(--color-text-muted);"
+          class="font-mono text-xs font-bold tracking-[0.14em] px-2 py-0.5"
+          style="border: 2px solid #0a0a0a; color: #0a0a0a;"
         >
-          {post.data.date.toLocaleDateString("zh-CN", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-          })}
-        </time>
-        {post.data.updated && (
-          <span
-            class="text-xs tracking-[0.14em] uppercase"
-            style="color: var(--color-text-faint);"
-          >
-            · Updated{" "}
-            {post.data.updated.toLocaleDateString("zh-CN", {
+          {
+            post.data.date.toLocaleDateString("zh-CN", {
               year: "numeric",
               month: "2-digit",
               day: "2-digit",
-            })}
-          </span>
-        )}
+            })
+          }
+        </time>
+        {
+          post.data.updated && (
+            <span
+              class="font-mono text-[0.68rem] font-bold tracking-[0.12em] uppercase"
+              style="color: #0a0a0a; opacity: 0.65;"
+            >
+              Updated{" "}
+              {post.data.updated.toLocaleDateString("zh-CN", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+              })}
+            </span>
+          )
+        }
       </div>
 
       <!-- Title -->
       <h1
-        class="font-display text-3xl sm:text-4xl md:text-5xl leading-tight tracking-tight mb-5"
-        style="color: var(--color-text); font-weight: 500;"
+        class="font-display text-3xl sm:text-4xl md:text-5xl leading-[1.05] mb-4"
+        style="color: #0a0a0a;"
       >
         {post.data.title}
       </h1>
 
       <!-- Description (subtitle) -->
       <p
-        class="text-base sm:text-lg leading-relaxed mb-5"
-        style="color: var(--color-text-soft);"
+        class="text-base sm:text-lg leading-relaxed"
+        style="color: #0a0a0a; opacity: 0.8;"
       >
         {post.data.description}
       </p>
 
       <!-- Tags -->
-      {post.data.tags.length > 0 && (
-        <div class="flex flex-wrap gap-1.5">
-          {post.data.tags.map((tag) => (
-            <a href={`/blog#tag-${tag}`} class="tag-chip no-underline">
-              {tag}
-            </a>
-          ))}
-        </div>
-      )}
+      {
+        post.data.tags.length > 0 && (
+          <div class="flex flex-wrap gap-2 mt-5">
+            {post.data.tags.map((tag) => (
+              <span
+                class="font-mono text-[0.66rem] font-bold uppercase tracking-[0.1em] px-2 py-0.5"
+                style="border: 2px solid #0a0a0a; background: var(--color-surface); color: #0a0a0a;"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )
+      }
     </header>
-
-    <!-- Divider -->
-    <hr
-      class="mb-12"
-      style="border: none; border-top: 1px solid var(--color-border);"
-    />
 
     <!-- Article body -->
     <div class="prose-custom" set:html={post.rendered?.html ?? ""}>
@@ -120,15 +121,11 @@ const { post } = Astro.props;
 
     <!-- Footer nav -->
     <hr
-      class="mt-16 mb-8"
-      style="border: none; border-top: 1px solid var(--color-border);"
+      class="mt-14 mb-7"
+      style="border: none; border-top: var(--nb-border-w) solid var(--color-ink);"
     />
-    <div class="flex items-center justify-between">
-      <a
-        href="/blog"
-        class="inline-flex items-center gap-2 text-sm link-underline"
-        style="color: var(--color-text-muted);"
-      >
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <a href="/blog" class="nb-btn">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="14"
@@ -136,7 +133,7 @@ const { post } = Astro.props;
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="1.8"
+          stroke-width="2.4"
           stroke-linecap="round"
           stroke-linejoin="round"
           aria-hidden="true"
@@ -146,12 +143,24 @@ const { post } = Astro.props;
         </svg>
         <span>All posts</span>
       </a>
-      <span
-        class="text-xs tracking-[0.14em] uppercase"
-        style="color: var(--color-text-faint);"
-      >
-        Journal
-      </span>
+      <a href="/" class="nb-btn">
+        <span>Home</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.4"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
     </div>
   </article>
 </Layout>

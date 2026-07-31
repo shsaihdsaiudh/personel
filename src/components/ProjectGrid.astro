@@ -6,132 +6,102 @@ interface Props {
 }
 
 const { items } = Astro.props;
+
+// 每张卡片顶部条的颜色轮换
+const accents = ["var(--nb-yellow)", "var(--nb-blue)", "var(--nb-red)", "var(--nb-green)"];
 ---
 
-<section
-  class="relative max-w-5xl mx-auto px-5 sm:px-8 py-16 sm:py-24
-         animate-fade-in-up animate-section-3"
->
+<section class="relative max-w-5xl mx-auto px-5 sm:px-8 py-10 sm:py-14">
   <!-- Section header -->
-  <div class="flex items-end justify-between mb-12 sm:mb-16">
+  <div class="flex flex-wrap items-end justify-between gap-4 mb-8 sm:mb-10">
     <div>
-      <span class="eyebrow">— 02 / Selected work</span>
+      <span class="nb-label" style="background: var(--nb-green);">02 / Projects</span>
       <h2
-        class="font-display mt-3 text-4xl sm:text-5xl md:text-6xl tracking-tight"
-        style="color: var(--color-text); font-weight: 400;"
+        class="font-display mt-4 text-4xl sm:text-5xl md:text-6xl"
+        style="color: var(--color-text);"
       >
-        Projects,
-        <span style="font-style: italic; color: var(--color-text-muted);">
-          made with care.
-        </span>
+        项目
       </h2>
     </div>
     <div
-      class="hidden md:block text-right text-[0.72rem] tracking-[0.2em] uppercase shrink-0 ml-6"
-      style="color: var(--color-text-faint);"
+      class="font-mono text-xs font-bold tracking-[0.16em] uppercase px-3 py-1.5"
+      style="border: var(--nb-border-w) solid var(--color-ink); color: var(--color-text);"
     >
       {items.length.toString().padStart(2, "0")} works
     </div>
   </div>
 
-  <div
-    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-5 sm:gap-6
-           animate-stagger-children"
-  >
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 nb-stagger">
     {
       items.map((item, idx) => {
-        // Bento layout: first card spans larger
-        const isFeatured = idx === 0;
-        const colSpan = isFeatured
-          ? "lg:col-span-4"
-          : "lg:col-span-2";
+        const accent = accents[idx % accents.length];
         return (
-          <article
-            class={`
-              group relative flex flex-col
-              glass-card gradient-border
-              p-6 sm:p-7
-              ${colSpan}
-              ${isFeatured ? "min-h-[280px]" : "min-h-[220px]"}
-            `}
-          >
-            <!-- Project number + featured tag -->
-            <div class="flex items-center justify-between mb-4">
+          <article class="nb-card flex flex-col nb-pop">
+            <!-- 顶部色条：编号 + 装饰点 -->
+            <div
+              class="flex items-center justify-between px-4 py-2"
+              style={`background: ${accent}; border-bottom: var(--nb-border-w) solid var(--color-ink);`}
+            >
               <span
-                class="font-display text-xs tracking-[0.2em] uppercase"
-                style="color: var(--color-text-faint);"
+                class="font-mono text-xs font-bold tracking-[0.18em]"
+                style="color: #0a0a0a;"
               >
                 /{(idx + 1).toString().padStart(2, "0")}
               </span>
-              {isFeatured && (
-                <span
-                  class="text-[0.65rem] tracking-[0.2em] uppercase px-2 py-0.5 rounded-full"
-                  style="color: var(--color-accent); border: 1px solid var(--color-accent); background: color-mix(in srgb, var(--color-accent) 8%, transparent);"
-                >
-                  Featured
-                </span>
-              )}
+              <span class="flex gap-1" aria-hidden="true">
+                <span class="w-2 h-2" style="background: #0a0a0a;" />
+                <span class="w-2 h-2" style="background: #0a0a0a;" />
+                <span class="w-2 h-2" style="background: #0a0a0a;" />
+              </span>
             </div>
 
-            <!-- Project name -->
-            <h3
-              class={`font-display tracking-tight leading-tight mb-3
-                ${isFeatured ? "text-2xl sm:text-3xl md:text-4xl" : "text-xl sm:text-2xl"}
-              `}
-              style="color: var(--color-text); font-weight: 500;"
-            >
-              {item.name}
-            </h3>
-
-            <!-- Description -->
-            <p
-              class={`leading-relaxed mb-5 flex-1
-                ${isFeatured ? "text-base" : "text-sm"}
-              `}
-              style="color: var(--color-text-soft);"
-            >
-              {item.description}
-            </p>
-
-            <!-- Tech stack -->
-            <div class="flex flex-wrap gap-1.5 mb-5">
-              {item.techStack.map((tech) => (
-                <span class="tag-chip">{tech}</span>
-              ))}
-            </div>
-
-            <!-- Link -->
-            {item.link && (
-              <a
-                href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="
-                  inline-flex items-center gap-2 self-start
-                  text-sm font-medium
-                  link-underline
-                "
+            <div class="flex flex-col flex-1 px-5 sm:px-6 py-5">
+              <h3
+                class="font-display text-xl sm:text-2xl leading-tight mb-3"
                 style="color: var(--color-text);"
               >
-                <span>{item.linkText ?? "View project"}</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.8"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                  aria-hidden="true"
+                {item.name}
+              </h3>
+
+              <p
+                class="text-sm leading-relaxed mb-5 flex-1"
+                style="color: var(--color-text-soft);"
+              >
+                {item.description}
+              </p>
+
+              <div class="flex flex-wrap gap-2 mb-5">
+                {item.techStack.map((tech) => (
+                  <span class="nb-tag">{tech}</span>
+                ))}
+              </div>
+
+              {item.link && (
+                <a
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="nb-btn self-start"
                 >
-                  <line x1="7" y1="17" x2="17" y2="7"></line>
-                  <polyline points="7 7 17 7 17 17"></polyline>
-                </svg>
-              </a>
-            )}
+                  <span>{item.linkText ?? "View project"}</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <line x1="7" y1="17" x2="17" y2="7" />
+                    <polyline points="7 7 17 7 17 17" />
+                  </svg>
+                </a>
+              )}
+            </div>
           </article>
         );
       })
