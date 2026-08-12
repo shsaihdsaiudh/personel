@@ -6,105 +6,72 @@ interface Props {
 }
 
 const { items } = Astro.props;
-
-// 每张卡片顶部条的颜色轮换
-const accents = ["var(--nb-yellow)", "var(--nb-blue)", "var(--nb-red)", "var(--nb-green)"];
 ---
 
-<section class="relative max-w-5xl mx-auto px-5 sm:px-8 py-10 sm:py-14">
+<section
+  class="px-6 sm:px-14 py-10 sm:py-14"
+  style="border-top: 1px solid var(--color-border);"
+>
   <!-- Section header -->
   <div class="flex flex-wrap items-end justify-between gap-4 mb-8 sm:mb-10">
     <div>
-      <span class="nb-label" style="background: var(--nb-green);">02 / Projects</span>
+      <p class="ed-eyebrow mb-5"><span class="bar"></span>02 / Projects</p>
       <h2
-        class="font-display mt-4 text-4xl sm:text-5xl md:text-6xl"
-        style="color: var(--color-text);"
+        class="text-2xl sm:text-3xl"
+        style="color: var(--color-text); font-weight: 800;"
       >
         项目
       </h2>
     </div>
-    <div
-      class="font-mono text-xs font-bold tracking-[0.16em] uppercase px-3 py-1.5"
-      style="border: var(--nb-border-w) solid var(--color-ink); color: var(--color-text);"
-    >
-      {items.length.toString().padStart(2, "0")} works
-    </div>
+    <span class="ed-stamp">{items.length.toString().padStart(2, "0")} works</span>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 nb-stagger">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5 ed-stagger">
     {
-      items.map((item, idx) => {
-        const accent = accents[idx % accents.length];
-        return (
-          <article class="nb-card flex flex-col nb-pop">
-            <!-- 顶部色条：编号 + 装饰点 -->
-            <div
-              class="flex items-center justify-between px-4 py-2"
-              style={`background: ${accent}; border-bottom: var(--nb-border-w) solid var(--color-ink);`}
+      items.map((item, idx) => (
+        <article class="ed-card ed-rise flex flex-col px-6 py-6">
+          <!-- 编号 -->
+          <div
+            class="font-anton text-3xl mb-4"
+            style="color: var(--ed-accent);"
+            aria-hidden="true"
+          >
+            /{(idx + 1).toString().padStart(2, "0")}
+          </div>
+
+          <h3
+            class="font-display text-xl sm:text-2xl leading-tight mb-3"
+            style="color: var(--color-text);"
+          >
+            {item.name}
+          </h3>
+
+          <p
+            class="text-sm leading-relaxed mb-5 flex-1"
+            style="color: var(--color-text-soft);"
+          >
+            {item.description}
+          </p>
+
+          <div class="flex flex-wrap gap-2 mb-5">
+            {item.techStack.map((tech) => (
+              <span class="ed-tag">{tech}</span>
+            ))}
+          </div>
+
+          {item.link && (
+            <a
+              href={item.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="ed-btn self-start"
             >
-              <span
-                class="font-mono text-xs font-bold tracking-[0.18em]"
-                style="color: #0a0a0a;"
-              >
-                /{(idx + 1).toString().padStart(2, "0")}
-              </span>
-              <span class="flex gap-1" aria-hidden="true">
-                <span class="w-2 h-2" style="background: #0a0a0a;" />
-                <span class="w-2 h-2" style="background: #0a0a0a;" />
-                <span class="w-2 h-2" style="background: #0a0a0a;" />
-              </span>
-            </div>
-
-            <div class="flex flex-col flex-1 px-5 sm:px-6 py-5">
-              <h3
-                class="font-display text-xl sm:text-2xl leading-tight mb-3"
-                style="color: var(--color-text);"
-              >
-                {item.name}
-              </h3>
-
-              <p
-                class="text-sm leading-relaxed mb-5 flex-1"
-                style="color: var(--color-text-soft);"
-              >
-                {item.description}
-              </p>
-
-              <div class="flex flex-wrap gap-2 mb-5">
-                {item.techStack.map((tech) => (
-                  <span class="nb-tag">{tech}</span>
-                ))}
-              </div>
-
-              {item.link && (
-                <a
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="nb-btn self-start"
-                >
-                  <span>{item.linkText ?? "View project"}</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2.4"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                  >
-                    <line x1="7" y1="17" x2="17" y2="7" />
-                    <polyline points="7 7 17 7 17 17" />
-                  </svg>
-                </a>
-              )}
-            </div>
-          </article>
-        );
-      })
+              <span>{item.linkText ?? "View project"}</span>
+              <span class="ed-arrow" aria-hidden="true"></span>
+            </a>
+          )}
+        </article>
+      ))
     }
   </div>
 </section>

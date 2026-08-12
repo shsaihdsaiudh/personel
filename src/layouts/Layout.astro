@@ -46,14 +46,13 @@ const jsonLd = {
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#fffcf2" />
+    <meta name="theme-color" content="#f4efe7" />
     <meta name="color-scheme" content="light dark" />
 
     <!-- Canonical URL -->
@@ -78,11 +77,11 @@ const jsonLd = {
     <meta name="twitter:image" content={ogImage} />
     <meta name="twitter:image:alt" content={title} />
 
-    <!-- Fonts: Space Grotesk (display) + JetBrains Mono (labels / code) -->
+    <!-- Fonts: Anton (拉丁展示) + Noto Sans SC (中文标题) + Inter (正文) + JetBrains Mono (戳记) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@500;700;900&display=swap"
       rel="stylesheet"
     />
 
@@ -109,148 +108,136 @@ const jsonLd = {
     </script>
   </head>
 
-  <body class="flex flex-col min-h-screen relative">
-    <!-- 网格纸背景 -->
-    <div class="nb-grid" aria-hidden="true"></div>
-
-    <!-- Header -->
-    <header
-      class="sticky top-0 z-20"
-      style="background: var(--color-bg); border-bottom: var(--nb-border-w) solid var(--color-ink);"
-    >
-      <div
-        class="max-w-5xl mx-auto px-5 sm:px-8 py-3 flex items-center justify-between gap-3"
+  <body>
+    <div class="ed-frame">
+      <!-- 刊头 -->
+      <header
+        class="sticky top-0 z-20"
+        style="background: var(--color-bg); border-bottom: 1px solid var(--color-border);"
       >
-        <!-- 实心方块字标 -->
-        <a href="/" class="flex items-center gap-2.5" aria-label="首页">
-          <span
-            class="inline-flex items-center justify-center w-9 h-9 shrink-0 font-display text-lg"
-            style="border: var(--nb-border-w) solid var(--color-ink); background: var(--nb-red); color: #0a0a0a; box-shadow: 3px 3px 0 0 var(--color-ink);"
-          >
-            杨
-          </span>
-          <span class="hidden sm:flex flex-col leading-none">
-            <span
-              class="font-display text-base"
-              style="color: var(--color-text);"
-            >
-              杨晔塬
+        <div class="px-6 sm:px-14 py-4 flex items-center justify-between gap-3">
+          <a href="/" class="flex items-center gap-2.5" aria-label="首页">
+            <span class="ed-mark" aria-hidden="true"></span>
+            <span class="font-mono text-sm font-bold tracking-[0.06em]" style="color: var(--color-text);">
+              shsaihdsaiudh
             </span>
-            <span
-              class="font-mono text-[0.6rem] tracking-[0.18em] uppercase mt-1"
-              style="color: var(--color-text-muted);"
-            >
-              Agent Dev
-            </span>
-          </span>
-        </a>
+            <span class="ed-stamp hidden sm:inline-block">自留地</span>
+          </a>
 
-        <div class="flex items-center gap-2 sm:gap-3">
-          <nav class="flex items-center gap-1 sm:gap-2">
-            <a
-              href="/"
-              class="nb-nav-link"
-              aria-current={isActive("/") ? "page" : undefined}>Index</a
-            >
-            <a
-              href="/blog"
-              class="nb-nav-link"
-              aria-current={isActive("/blog") ? "page" : undefined}>Journal</a
-            >
-            <a
-              href="mailto:2776079516@qq.com"
-              class="nb-nav-link hidden sm:inline-block">Contact</a
-            >
-          </nav>
+          <div class="flex items-center gap-4 sm:gap-7">
+            <nav class="flex items-center gap-4 sm:gap-7">
+              <a
+                href="/"
+                class="ed-nav-link"
+                aria-current={isActive("/") ? "page" : undefined}>Index</a
+              >
+              <a
+                href="/about"
+                class="ed-nav-link"
+                aria-current={isActive("/about") ? "page" : undefined}>About</a
+              >
+              <a
+                href="mailto:2776079516@qq.com"
+                class="ed-nav-link hidden sm:inline-block">Contact</a
+              >
+            </nav>
 
-          <!-- 主题切换按钮 -->
-          <button
-            id="theme-toggle"
-            class="nb-theme-btn"
-            aria-label="切换主题"
-            title="切换亮色/暗色主题"
-          >
-            <svg
-              class="icon-sun"
-              xmlns="http://www.w3.org/2000/svg"
-              width="17"
-              height="17"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.5"
-              stroke-linecap="round"
+            <!-- 主题切换按钮 -->
+            <button
+              id="theme-toggle"
+              class="ed-theme-btn"
+              aria-label="切换主题"
+              title="切换亮色/暗色主题"
             >
-              <circle cx="12" cy="12" r="4"></circle>
-              <line x1="12" y1="2" x2="12" y2="4"></line>
-              <line x1="12" y1="20" x2="12" y2="22"></line>
-              <line x1="4.9" y1="4.9" x2="6.3" y2="6.3"></line>
-              <line x1="17.7" y1="17.7" x2="19.1" y2="19.1"></line>
-              <line x1="2" y1="12" x2="4" y2="12"></line>
-              <line x1="20" y1="12" x2="22" y2="12"></line>
-              <line x1="4.9" y1="19.1" x2="6.3" y2="17.7"></line>
-              <line x1="17.7" y1="6.3" x2="19.1" y2="4.9"></line>
-            </svg>
-            <svg
-              class="icon-moon"
-              xmlns="http://www.w3.org/2000/svg"
-              width="17"
-              height="17"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-          </button>
+              <svg
+                class="icon-sun"
+                xmlns="http://www.w3.org/2000/svg"
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              >
+                <circle cx="12" cy="12" r="4"></circle>
+                <line x1="12" y1="2" x2="12" y2="4"></line>
+                <line x1="12" y1="20" x2="12" y2="22"></line>
+                <line x1="4.9" y1="4.9" x2="6.3" y2="6.3"></line>
+                <line x1="17.7" y1="17.7" x2="19.1" y2="19.1"></line>
+                <line x1="2" y1="12" x2="4" y2="12"></line>
+                <line x1="20" y1="12" x2="22" y2="12"></line>
+                <line x1="4.9" y1="19.1" x2="6.3" y2="17.7"></line>
+                <line x1="17.7" y1="6.3" x2="19.1" y2="4.9"></line>
+              </svg>
+              <svg
+                class="icon-moon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+              </svg>
+            </button>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
 
-    <!-- 主内容区 -->
-    <main class="flex-1 relative">
-      <slot />
-    </main>
+      <!-- 主内容区 -->
+      <main class="flex-1">
+        <slot />
+      </main>
 
-    <!-- Footer -->
-    <footer class="mt-16 sm:mt-24">
-      <!-- 黄底跑马灯横幅 -->
-      <div class="nb-band py-3">
+      <!-- 页脚 -->
+      <footer
+        class="mt-16 sm:mt-20"
+        style="border-top: 1px solid var(--color-border);"
+      >
         <div
-          class="marquee font-mono text-sm sm:text-base font-bold uppercase tracking-[0.1em]"
-          aria-hidden="true"
+          class="px-6 sm:px-14 py-8 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6"
         >
-          <span>Build it loud</span>
-          <span>◆</span>
-          <span>Ship it hard</span>
-          <span>◆</span>
-          <span>No rounded corners</span>
-          <span>◆</span>
-          <span>Build it loud</span>
-          <span>◆</span>
-          <span>Ship it hard</span>
-          <span>◆</span>
-          <span>No rounded corners</span>
-          <span>◆</span>
+          <div class="flex flex-col gap-2.5">
+            <span class="flex items-center gap-2.5">
+              <span class="ed-mark ed-mark-sm" aria-hidden="true"></span>
+              <span class="font-display text-base" style="color: var(--color-text);">
+                杨晔塬
+              </span>
+            </span>
+            <span class="flex gap-4">
+              <a
+                href="https://github.com/shsaihdsaiudh"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="ed-link text-xs"
+                style="color: var(--color-text-muted);">GitHub</a
+              >
+              <a
+                href="mailto:2776079516@qq.com"
+                class="ed-link text-xs"
+                style="color: var(--color-text-muted);">Email</a
+              >
+              <a
+                href="/rss.xml"
+                class="ed-link text-xs"
+                style="color: var(--color-text-muted);">RSS</a
+              >
+            </span>
+          </div>
+          <div
+            class="font-mono text-[0.66rem] leading-relaxed tracking-[0.08em] uppercase sm:text-right"
+            style="color: var(--color-text-muted);"
+          >
+            &copy; {new Date().getFullYear()} 杨晔塬<br />Astro + Tailwind
+          </div>
         </div>
-      </div>
-
-      <div
-        class="max-w-5xl mx-auto px-5 sm:px-8 py-7 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[0.68rem] tracking-[0.12em] uppercase"
-        style="color: var(--color-text-muted);"
-      >
-        <span>&copy; {new Date().getFullYear()} 杨晔塬</span>
-        <span class="flex items-center gap-2">
-          <span
-            class="inline-block w-2 h-2"
-            style="background: var(--nb-blue);"></span>
-          Astro + Tailwind · v2.0
-        </span>
-      </div>
-    </footer>
+      </footer>
+    </div>
 
     <!-- 主题切换逻辑 -->
     <script is:inline>

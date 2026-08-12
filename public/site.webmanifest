@@ -1,16 +1,21 @@
 {
-  "name": "Personel",
-  "short_name": "Personel",
-  "description": "A minimalist personal homepage.",
+  "name": "杨晔塬",
+  "short_name": "杨晔塬",
+  "description": "杨晔塬的个人主页与博客。",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "background_color": "#f4efe7",
+  "theme_color": "#1a1816",
   "icons": [
     {
-      "src": "/favicon.svg",
-      "sizes": "128x128",
-      "type": "image/svg+xml"
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ]
 }

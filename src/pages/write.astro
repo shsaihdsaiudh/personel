@@ -1,0 +1,166 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const today = new Date().toISOString().slice(0, 10);
+---
+
+<Layout
+  title="写作 — 杨晔塬"
+  description="新建一篇博客文章。"
+  slug="write"
+>
+  <section class="px-6 sm:px-14 pt-12 sm:pt-16 pb-16">
+    <p class="ed-eyebrow mb-5 ed-rise"><span class="bar"></span>New post</p>
+    <h1
+      class="text-2xl sm:text-3xl ed-rise ed-delay-1"
+      style="color: var(--color-text); font-weight: 800;"
+    >
+      写点什么
+    </h1>
+    <p
+      class="mt-3 text-sm leading-relaxed max-w-[56ch] ed-rise ed-delay-2"
+      style="color: var(--color-text-muted);"
+    >
+      填好下面的内容，点「发布」会跳到 GitHub 网页编辑器——文件名和文章都已预填，
+      在那里点一次 Commit，Vercel 就会自动构建上线。全程不需要 clone 仓库。
+    </p>
+
+    <form id="post-form" class="flex flex-col gap-5 mt-10 ed-rise ed-delay-3">
+      <div class="flex flex-col gap-1.5">
+        <label class="ed-form-label" for="f-title">标题</label>
+        <input class="ed-input" id="f-title" type="text" required
+          placeholder="文章标题" />
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <div class="flex flex-col gap-1.5">
+          <label class="ed-form-label" for="f-slug">Slug（英文，决定网址）</label>
+          <input class="ed-input" id="f-slug" type="text"
+            pattern="[a-z0-9\-]+" placeholder="my-first-post" />
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label class="ed-form-label" for="f-date">日期</label>
+          <input class="ed-input" id="f-date" type="date" value={today} required />
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label class="ed-form-label" for="f-tags">标签（逗号分隔）</label>
+          <input class="ed-input" id="f-tags" type="text"
+            placeholder="Java, 随笔" />
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-1.5">
+        <label class="ed-form-label" for="f-desc">摘要（列表页和 SEO 用）</label>
+        <textarea class="ed-input" id="f-desc" rows="2" required
+          placeholder="一两句话概括这篇文章"></textarea>
+      </div>
+
+      <div class="flex flex-col gap-1.5">
+        <label class="ed-form-label" for="f-body">正文（Markdown）</label>
+        <textarea class="ed-input font-mono" id="f-body" rows="16" required
+          placeholder="## 开始写吧"></textarea>
+      </div>
+
+      <label class="flex items-center gap-2.5 text-sm cursor-pointer select-none"
+        style="color: var(--color-text-muted);">
+        <input id="f-draft" type="checkbox" />
+        先存为草稿（draft: true，不会发布到页面）
+      </label>
+
+      <div class="flex flex-wrap items-center gap-3 mt-2">
+        <button type="submit" class="ed-btn ed-btn-primary">
+          <span>发布到 GitHub</span>
+          <span class="ed-arrow" aria-hidden="true"></span>
+        </button>
+        <button type="button" id="copy-btn" class="ed-btn">
+          <span>复制 Markdown</span>
+        </button>
+        <span id="copy-hint" class="font-mono text-[0.66rem] tracking-[0.1em] uppercase hidden"
+          style="color: var(--ed-accent);">已复制 ✓</span>
+      </div>
+    </form>
+  </section>
+
+  <script is:inline>
+    (function () {
+      var REPO = "shsaihdsaiudh/personel";
+      var BRANCH = "main";
+      var DIR = "src/data/blog";
+
+      function val(id) { return document.getElementById(id).value.trim(); }
+      function yaml(s) { return '"' + s.replace(/\\/g, "\\\\").replace(/"/g, '\\"') + '"'; }
+
+      function build() {
+        var title = val("f-title");
+        var desc = val("f-desc");
+        var date = val("f-date");
+        var slug = val("f-slug") || "post-" + date.replace(/-/g, "");
+        var tags = val("f-tags")
+          ? val("f-tags").split(/[,，]/).map(function (t) { return t.trim(); }).filter(Boolean)
+          : [];
+        var draft = document.getElementById("f-draft").checked;
+        var body = document.getElementById("f-body").value.replace(/\s+$/, "");
+
+        var fm = ["---", "title: " + yaml(title), "description: " + yaml(desc),
+          "date: " + date, "slug: " + yaml(slug)];
+        if (tags.length) fm.push("tags: [" + tags.map(yaml).join(", ") + "]");
+        if (draft) fm.push("draft: true");
+        fm.push("---");
+
+        return {
+          filename: date + "-" + slug + ".md",
+          markdown: fm.join("\n") + "\n\n" + body + "\n",
+        };
+      }
+
+      document.getElementById("post-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        var post = build();
+        var url = "https://github.com/" + REPO + "/new/" + BRANCH + "/" + DIR +
+          "?filename=" + encodeURIComponent(post.filename) +
+          "&value=" + encodeURIComponent(post.markdown);
+        window.open(url, "_blank", "noopener");
+      });
+
+      document.getElementById("copy-btn").addEventListener("click", function () {
+        var post = build();
+        navigator.clipboard.writeText(post.markdown).then(function () {
+          var hint = document.getElementById("copy-hint");
+          hint.classList.remove("hidden");
+          setTimeout(function () { hint.classList.add("hidden"); }, 1600);
+        });
+      });
+    })();
+  </script>
+</Layout>
+
+<style>
+  .ed-form-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  .ed-input {
+    width: 100%;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 3px;
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    transition: border-color 0.15s ease;
+  }
+  .ed-input:focus {
+    outline: none;
+    border-color: var(--ed-accent);
+  }
+  .ed-input::placeholder {
+    color: var(--color-text-faint);
+  }
+  textarea.ed-input {
+    resize: vertical;
+  }
+</style>

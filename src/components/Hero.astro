@@ -1,174 +1,37 @@
 ---
-// Hero.astro — Neo-brutalism
+// Hero.astro — 首页开场：精神自留地，不放简历信息
 ---
 
-<section
-  class="relative max-w-5xl mx-auto px-5 sm:px-8 pt-12 sm:pt-16 pb-12 sm:pb-16"
->
-  <!-- 顶部标签行 -->
-  <div class="flex flex-wrap items-center justify-between gap-3 mb-8 nb-pop nb-delay-1">
-    <span class="nb-label">Portfolio · 2026</span>
-    <span class="nb-status">
+<section class="px-6 sm:px-14 pt-12 sm:pt-16 pb-12">
+  <!-- 顶部戳记行 -->
+  <div class="flex flex-wrap items-center justify-between gap-3 mb-10 ed-rise ed-delay-1">
+    <span class="ed-stamp">自留地 · 2026</span>
+    <span class="ed-status">
       <span class="dot" aria-hidden="true"></span>
-      Open to opportunities
+      Writing in progress
     </span>
   </div>
 
-  <!-- 主标题块：黄底黑边大方块，名字撑满 -->
-  <div class="nb-pop nb-delay-2">
-    <div
-      class="nb-box nb-shadow px-5 sm:px-8 py-7 sm:py-10"
-      style="background: var(--nb-yellow);"
+  <!-- 眉批 + 大标题 -->
+  <div class="ed-rise ed-delay-2">
+    <p class="ed-eyebrow mb-7"><span class="bar"></span>Welcome</p>
+    <h1
+      class="text-[clamp(2.6rem,8vw,4.6rem)] leading-[1.15]"
+      style="color: var(--color-text);"
     >
-      <p
-        class="font-mono text-[0.7rem] sm:text-xs font-bold tracking-[0.2em] uppercase mb-3"
-        style="color: #0a0a0a;"
-      >
-        Hello — 我是
-      </p>
-      <h1
-        class="font-display text-[clamp(3rem,13vw,7.5rem)] leading-[0.85]"
-        style="color: #0a0a0a;"
-      >
-        杨晔塬
-      </h1>
-      <p
-        class="font-display text-[clamp(1.1rem,3.4vw,2rem)] mt-3 leading-tight"
-        style="color: #0a0a0a;"
-      >
-        AI AGENT / 后端开发
-      </p>
-    </div>
+      写代码，<br />
+      也<em class="ed-em not-italic">写字</em>。
+    </h1>
   </div>
 
-  <!-- 简介 + 快捷按钮，错位叠在主块下方 -->
-  <div
-    class="mt-6 sm:mt-8 grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 nb-pop nb-delay-3"
+  <!-- 简介 -->
+  <p
+    class="mt-8 text-[0.95rem] sm:text-base leading-relaxed max-w-[56ch] ed-rise ed-delay-3"
+    style="color: var(--color-text-soft);"
   >
-    <div class="md:col-span-2 nb-box nb-shadow px-5 sm:px-7 py-5 sm:py-6">
-      <p
-        class="text-[0.95rem] sm:text-base leading-relaxed"
-        style="color: var(--color-text-soft);"
-      >
-        电子科技大学 · 信息与通信工程在读，现于
-        <span class="nb-mark font-bold">腾讯</span>
-        做
-        <span
-          class="nb-mark font-bold"
-          style="background: var(--nb-blue); color: #fff;">AI Agent 开发</span
-        >。做长时 Agent 的执行框架、流程编排与状态恢复，也关心推理 Infra 与后训练。
-      </p>
-
-      <div class="flex flex-wrap items-center gap-3 mt-5">
-        <a
-          href="https://github.com/shsaihdsaiudh"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="nb-btn nb-btn-primary"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="15"
-            height="15"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            <path
-              d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
-            ></path>
-            <path d="M9 18c-4.51 2-5-2-7-2"></path>
-          </svg>
-          <span>GitHub</span>
-        </a>
-        <a href="mailto:2776079516@qq.com" class="nb-btn">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="15"
-            height="15"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            <rect width="20" height="16" x="2" y="4"></rect>
-            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-          </svg>
-          <span>Email</span>
-        </a>
-        <a href="/blog" class="nb-btn">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="15"
-            height="15"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
-            ></path>
-          </svg>
-          <span>Journal</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- 信息卡：三条并排的实心色块 -->
-    <div class="flex flex-col gap-3">
-      <div
-        class="nb-box nb-shadow-sm px-4 py-3"
-        style="background: var(--nb-lilac);"
-      >
-        <div
-          class="font-mono text-[0.62rem] font-bold tracking-[0.16em] uppercase mb-1"
-          style="color: #0a0a0a; opacity: 0.7;"
-        >
-          Currently
-        </div>
-        <div class="font-display text-lg" style="color: #0a0a0a;">
-          腾讯 · 实习
-        </div>
-      </div>
-      <div
-        class="nb-box nb-shadow-sm px-4 py-3"
-        style="background: var(--nb-green);"
-      >
-        <div
-          class="font-mono text-[0.62rem] font-bold tracking-[0.16em] uppercase mb-1"
-          style="color: #0a0a0a; opacity: 0.7;"
-        >
-          School
-        </div>
-        <div class="font-display text-lg" style="color: #0a0a0a;">
-          电子科大 · 985
-        </div>
-      </div>
-      <div
-        class="nb-box nb-shadow-sm px-4 py-3"
-        style="background: var(--nb-red);"
-      >
-        <div
-          class="font-mono text-[0.62rem] font-bold tracking-[0.16em] uppercase mb-1"
-          style="color: #0a0a0a; opacity: 0.7;"
-        >
-          Stack
-        </div>
-        <div class="font-display text-lg" style="color: #0a0a0a;">
-          Agent · Java
-        </div>
-      </div>
-    </div>
-  </div>
+    这里是杨晔塬的个人博客。技术、阅读，和偶尔冒出来的一点想法，都会放在这里。
+    如果你要找的是我的经历和项目，它们在
+    <a href="/about" class="ed-link">About</a>
+    页。
+  </p>
 </section>

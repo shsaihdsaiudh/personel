@@ -1,0 +1,76 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Timeline from "../components/Timeline.astro";
+import ProjectGrid from "../components/ProjectGrid.astro";
+import { experiences } from "../data/experience";
+import { projects } from "../data/projects";
+---
+
+<Layout
+  title="关于 — 杨晔塬"
+  description="杨晔塬的经历与项目。电子科技大学信息与通信工程在读，现于腾讯做 AI Agent 开发。"
+  slug="about"
+  ogType="profile"
+>
+  <!-- 身份块 -->
+  <section class="px-6 sm:px-14 pt-12 sm:pt-16 pb-12">
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-10 ed-rise ed-delay-1">
+      <span class="ed-stamp">Portfolio · 2026</span>
+      <span class="ed-status">
+        <span class="dot" aria-hidden="true"></span>
+        Open to opportunities
+      </span>
+    </div>
+
+    <div class="ed-rise ed-delay-2">
+      <p class="ed-eyebrow mb-7"><span class="bar"></span>Hello — 我是</p>
+      <h1
+        class="text-[clamp(3.2rem,10vw,7rem)]"
+        style="color: var(--color-text);"
+      >
+        杨晔塬
+      </h1>
+      <p
+        class="mt-4 text-[clamp(1.4rem,4vw,2.2rem)] leading-tight"
+        style="color: var(--color-text);"
+      >
+        <span
+          class="font-anton uppercase inline-block"
+          style="color: var(--ed-accent); transform: skew(-8deg);"
+          >AI Agent</span
+        >
+        <span class="font-display"> / 后端开发</span>
+      </p>
+    </div>
+
+    <p
+      class="mt-8 text-[0.95rem] sm:text-base leading-relaxed max-w-[56ch] ed-rise ed-delay-3"
+      style="color: var(--color-text-soft);"
+    >
+      电子科技大学 · 信息与通信工程在读，现于
+      <em class="ed-em">腾讯</em>
+      做
+      <em class="ed-em">AI Agent 开发</em>。做长时 Agent
+      的执行框架、流程编排与状态恢复，也关心推理 Infra 与后训练。
+    </p>
+
+    <div class="flex flex-wrap items-center gap-3 mt-8 ed-rise ed-delay-3">
+      <a
+        href="https://github.com/shsaihdsaiudh"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="ed-btn ed-btn-primary"
+      >
+        <span>GitHub</span>
+        <span class="ed-arrow" aria-hidden="true"></span>
+      </a>
+      <a href="mailto:2776079516@qq.com" class="ed-btn">
+        <span>Email</span>
+        <span class="ed-arrow" aria-hidden="true"></span>
+      </a>
+    </div>
+  </section>
+
+  <Timeline items={experiences} />
+  <ProjectGrid items={projects} />
+</Layout>

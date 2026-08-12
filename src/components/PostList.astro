@@ -1,0 +1,75 @@
+---
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<section
+  class="px-6 sm:px-14 py-10 sm:py-14"
+  style="border-top: 1px solid var(--color-border);"
+>
+  <!-- Section header -->
+  <div class="flex flex-wrap items-end justify-between gap-4 mb-8 sm:mb-10">
+    <div>
+      <p class="ed-eyebrow mb-5"><span class="bar"></span>01 / Journal</p>
+      <h2 class="text-2xl sm:text-3xl" style="color: var(--color-text); font-weight: 800;">
+        文章
+      </h2>
+    </div>
+    <span class="ed-stamp">{posts.length.toString().padStart(2, "0")} posts</span>
+  </div>
+
+  {
+    posts.length === 0 ? (
+      <div
+        class="px-6 py-14 text-center font-mono text-xs uppercase tracking-[0.16em]"
+        style="border: 1px solid var(--color-border); color: var(--color-text-muted);"
+      >
+        还没有文章，敬请期待
+      </div>
+    ) : (
+      <div class="flex flex-col ed-stagger">
+        {posts.map((post) => (
+          <a
+            href={`/blog/post/${post.id}`}
+            class="ed-rise block py-6 first:pt-0 group"
+            style="border-top: 1px solid var(--color-border);"
+          >
+            <article class="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-8">
+              <time
+                class="shrink-0 sm:w-40 font-mono text-[0.7rem] tracking-[0.12em]"
+                style="color: var(--ed-accent);"
+              >
+                {post.data.date.toLocaleDateString("zh-CN", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                })}
+              </time>
+              <div class="flex-1">
+                <h3
+                  class="font-display text-lg sm:text-xl leading-snug mb-1.5"
+                  style="color: var(--color-text);"
+                >
+                  {post.data.title}
+                </h3>
+                <p
+                  class="text-sm leading-relaxed line-clamp-2"
+                  style="color: var(--color-text-muted);"
+                >
+                  {post.data.description}
+                </p>
+              </div>
+              <span
+                class="ed-arrow shrink-0 hidden sm:inline-block"
+                style="color: var(--color-text-muted);"
+                aria-hidden="true"
+              ></span>
+            </article>
+          </a>
+        ))}
+      </div>
+    )
+  }
+</section>

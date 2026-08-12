@@ -6,51 +6,46 @@ interface Props {
 }
 
 const { items } = Astro.props;
-
-// 循环用的强调色，让每条经历的时间块颜色不同
-const accents = ["var(--nb-blue)", "var(--nb-red)", "var(--nb-green)", "var(--nb-lilac)"];
 ---
 
-<section class="relative max-w-5xl mx-auto px-5 sm:px-8 py-10 sm:py-14">
+<section
+  class="px-6 sm:px-14 py-10 sm:py-14"
+  style="border-top: 1px solid var(--color-border);"
+>
   <!-- Section header -->
   <div class="flex flex-wrap items-end justify-between gap-4 mb-8 sm:mb-10">
     <div>
-      <span class="nb-label" style="background: var(--nb-lilac);">01 / Experience</span>
+      <p class="ed-eyebrow mb-5"><span class="bar"></span>01 / Experience</p>
       <h2
-        class="font-display mt-4 text-4xl sm:text-5xl md:text-6xl"
-        style="color: var(--color-text);"
+        class="text-2xl sm:text-3xl"
+        style="color: var(--color-text); font-weight: 800;"
       >
         经历
       </h2>
     </div>
-    <div
-      class="font-mono text-xs font-bold tracking-[0.16em] uppercase px-3 py-1.5"
-      style="border: var(--nb-border-w) solid var(--color-ink); color: var(--color-text);"
-    >
-      {items.length.toString().padStart(2, "0")} entries
-    </div>
+    <span class="ed-stamp">{items.length.toString().padStart(2, "0")} entries</span>
   </div>
 
-  <ul class="flex flex-col gap-5 sm:gap-6 nb-stagger" role="list">
+  <ul class="flex flex-col ed-stagger" role="list">
     {
-      items.map((item, idx) => (
-        <li class="nb-pop">
-          <div class="flex flex-col sm:flex-row sm:items-stretch gap-3 sm:gap-0">
-            <!-- 时间块：实心色块，桌面端贴在卡片左侧 -->
-            <div
-              class="shrink-0 sm:w-40 flex items-center justify-center px-4 py-2 sm:py-0"
-              style={`border: var(--nb-border-w) solid var(--color-ink); background: ${accents[idx % accents.length]}; box-shadow: 3px 3px 0 0 var(--color-ink);`}
-            >
+      items.map((item) => (
+        <li
+          class="ed-rise py-7 first:pt-0"
+          style="border-top: 1px solid var(--color-border);"
+        >
+          <div class="flex flex-col sm:flex-row gap-2 sm:gap-8">
+            <!-- 时间戳 -->
+            <div class="shrink-0 sm:w-40 sm:pt-1.5">
               <span
-                class="font-mono text-sm font-bold tracking-[0.06em] text-center"
-                style="color: #0a0a0a;"
+                class="font-mono text-[0.7rem] tracking-[0.1em] uppercase"
+                style="color: var(--ed-accent);"
               >
                 {item.time}
               </span>
             </div>
 
-            <!-- 内容卡片 -->
-            <div class="flex-1 nb-card px-5 sm:px-7 py-5 sm:py-6 sm:ml-5">
+            <!-- 内容 -->
+            <div class="flex-1">
               <h3
                 class="font-display text-xl sm:text-2xl mb-2"
                 style="color: var(--color-text);"
@@ -58,8 +53,8 @@ const accents = ["var(--nb-blue)", "var(--nb-red)", "var(--nb-green)", "var(--nb
                 {item.organization}
               </h3>
               <p
-                class="font-mono text-[0.72rem] font-bold tracking-[0.12em] uppercase inline-block px-2 py-0.5 mb-3"
-                style={`border: 2px solid var(--color-ink); background: ${accents[idx % accents.length]}; color: #0a0a0a;`}
+                class="font-mono text-[0.68rem] tracking-[0.14em] uppercase inline-block px-2 py-0.5 mb-3"
+                style="border: 1px solid var(--color-border-strong); border-radius: 3px; color: var(--color-text-muted);"
               >
                 {item.role}
               </p>
@@ -72,7 +67,7 @@ const accents = ["var(--nb-blue)", "var(--nb-red)", "var(--nb-green)", "var(--nb
               {item.highlights && item.highlights.length > 0 && (
                 <div class="flex flex-wrap gap-2 mt-4">
                   {item.highlights.map((h) => (
-                    <span class="nb-tag">{h}</span>
+                    <span class="ed-tag">{h}</span>
                   ))}
                 </div>
               )}

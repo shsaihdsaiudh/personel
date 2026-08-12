@@ -23,39 +23,22 @@ const { post } = Astro.props;
   slug={`blog/post/${post.id}`}
   ogType="article"
 >
-  <article
-    class="relative max-w-3xl mx-auto px-5 sm:px-8 pt-10 sm:pt-14 pb-12 sm:pb-16"
-  >
+  <article class="px-6 sm:px-14 pt-10 sm:pt-14 pb-12 sm:pb-16">
     <!-- Back link -->
-    <a href="/blog" class="nb-btn mb-8">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="14"
-        height="14"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2.4"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        aria-hidden="true"
-      >
-        <line x1="19" y1="12" x2="5" y2="12"></line>
-        <polyline points="12 19 5 12 12 5"></polyline>
-      </svg>
-      <span>Journal</span>
+    <a href="/" class="ed-btn mb-10 ed-rise">
+      <span>All posts</span>
     </a>
 
-    <!-- Article header — 黄底黑边标题块 -->
+    <!-- Article header — 眉批 + 大标题 + 细线分隔 -->
     <header
-      class="nb-box nb-shadow px-5 sm:px-7 py-6 sm:py-8 mb-10"
-      style="background: var(--nb-yellow);"
+      class="pb-8 mb-10 ed-rise ed-delay-1"
+      style="border-bottom: 1px solid var(--color-border);"
     >
       <!-- Meta -->
-      <div class="flex flex-wrap items-center gap-3 mb-4">
+      <div class="flex flex-wrap items-center gap-3 mb-5">
         <time
-          class="font-mono text-xs font-bold tracking-[0.14em] px-2 py-0.5"
-          style="border: 2px solid #0a0a0a; color: #0a0a0a;"
+          class="font-mono text-[0.7rem] tracking-[0.12em]"
+          style="color: var(--ed-accent);"
         >
           {
             post.data.date.toLocaleDateString("zh-CN", {
@@ -68,8 +51,8 @@ const { post } = Astro.props;
         {
           post.data.updated && (
             <span
-              class="font-mono text-[0.68rem] font-bold tracking-[0.12em] uppercase"
-              style="color: #0a0a0a; opacity: 0.65;"
+              class="font-mono text-[0.66rem] tracking-[0.12em] uppercase"
+              style="color: var(--color-text-muted);"
             >
               Updated{" "}
               {post.data.updated.toLocaleDateString("zh-CN", {
@@ -84,8 +67,8 @@ const { post } = Astro.props;
 
       <!-- Title -->
       <h1
-        class="font-display text-3xl sm:text-4xl md:text-5xl leading-[1.05] mb-4"
-        style="color: #0a0a0a;"
+        class="font-display text-3xl sm:text-4xl md:text-5xl leading-[1.1] mb-4"
+        style="color: var(--color-text);"
       >
         {post.data.title}
       </h1>
@@ -93,7 +76,7 @@ const { post } = Astro.props;
       <!-- Description (subtitle) -->
       <p
         class="text-base sm:text-lg leading-relaxed"
-        style="color: #0a0a0a; opacity: 0.8;"
+        style="color: var(--color-text-muted);"
       >
         {post.data.description}
       </p>
@@ -103,12 +86,7 @@ const { post } = Astro.props;
         post.data.tags.length > 0 && (
           <div class="flex flex-wrap gap-2 mt-5">
             {post.data.tags.map((tag) => (
-              <span
-                class="font-mono text-[0.66rem] font-bold uppercase tracking-[0.1em] px-2 py-0.5"
-                style="border: 2px solid #0a0a0a; background: var(--color-surface); color: #0a0a0a;"
-              >
-                {tag}
-              </span>
+              <span class="ed-tag">{tag}</span>
             ))}
           </div>
         )
@@ -122,44 +100,15 @@ const { post } = Astro.props;
     <!-- Footer nav -->
     <hr
       class="mt-14 mb-7"
-      style="border: none; border-top: var(--nb-border-w) solid var(--color-ink);"
+      style="border: none; border-top: 1px solid var(--color-border);"
     />
     <div class="flex flex-wrap items-center justify-between gap-4">
-      <a href="/blog" class="nb-btn">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2.4"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          aria-hidden="true"
-        >
-          <line x1="19" y1="12" x2="5" y2="12"></line>
-          <polyline points="12 19 5 12 12 5"></polyline>
-        </svg>
+      <a href="/" class="ed-btn">
         <span>All posts</span>
       </a>
-      <a href="/" class="nb-btn">
-        <span>Home</span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2.4"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          aria-hidden="true"
-        >
-          <line x1="5" y1="12" x2="19" y2="12"></line>
-          <polyline points="12 5 19 12 12 19"></polyline>
-        </svg>
+      <a href="/about" class="ed-btn">
+        <span>About</span>
+        <span class="ed-arrow" aria-hidden="true"></span>
       </a>
     </div>
   </article>

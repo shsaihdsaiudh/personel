@@ -4,62 +4,49 @@
 @variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /* =============================================================
-   Design tokens — Neo-brutalism
-   纸白底 / 纯黑描边 / 亮黄+电蓝+番茄红 色块 / 零圆角 / 硬投影
+   Design tokens — Editorial / Spec-sheet
+   灰纸外框 / 米纸内页 / 细线分隔 / 橙红点缀 / Anton 大标题 + 等宽小戳
    ============================================================= */
 :root {
-  /* surface */
-  --color-bg: #fffcf2;            /* warm paper */
-  --color-bg-soft: #f7f2e4;
-  --color-surface: #ffffff;
-  --color-surface-2: #fffcf2;
+  /* surface — 外层灰纸 + 内层米纸，构成信纸式的居中画框 */
+  --color-page: #d9d6d0;
+  --color-bg: #f4efe7;
+  --color-bg-soft: #ece6da;
+  --color-surface: #faf6ee;
 
-  /* ink — 描边与文字共用一个纯色，这是粗野风格的骨架 */
-  --color-ink: #0a0a0a;
-  --color-text: #0a0a0a;
-  --color-text-soft: #2b2b2b;
-  --color-text-muted: #5c5c5c;
-  --color-text-faint: #8a8a8a;
+  /* ink & text */
+  --color-ink: #1a1816;
+  --color-text: #1a1816;
+  --color-text-soft: #3d3a35;
+  --color-text-muted: #6b6964;
+  --color-text-faint: #9a968f;
 
-  /* accents — 高饱和色块 */
-  --nb-yellow: #ffe44d;
-  --nb-blue: #2e6ff2;
-  --nb-red: #ff4d3d;
-  --nb-green: #22c55e;
-  --nb-lilac: #c4a3ff;
+  /* 结构线 — 编辑部风格只用 1px 细线 */
+  --color-border: #d8d3c8;
+  --color-border-strong: #b7b0a2;
 
-  /* 主强调色（可被 dark 覆盖） */
-  --color-accent: #2e6ff2;
-  --color-accent-ink: #0a0a0a;    /* 落在强调色块上的文字色 */
-
-  /* 结构常量 */
-  --nb-border-w: 3px;
-  --nb-shadow-x: 6px;
-  --nb-shadow-y: 6px;
+  /* 唯一的强调色：橙红 */
+  --ed-accent: #d8482b;
+  --ed-accent-soft: rgba(216, 72, 43, 0.1);
 }
 
 [data-theme="dark"] {
-  --color-bg: #12100e;
-  --color-bg-soft: #1a1815;
-  --color-surface: #1c1a17;
-  --color-surface-2: #12100e;
+  --color-page: #121110;
+  --color-bg: #1c1a17;
+  --color-bg-soft: #25221d;
+  --color-surface: #221f1b;
 
-  /* 暗色下 ink 变成亮骨色，描边依然是唯一的结构线 */
-  --color-ink: #f5f1e8;
-  --color-text: #f5f1e8;
-  --color-text-soft: #ded8cc;
-  --color-text-muted: #a8a29a;
-  --color-text-faint: #7a756d;
+  --color-ink: #ece7dc;
+  --color-text: #ece7dc;
+  --color-text-soft: #cfc8ba;
+  --color-text-muted: #9a9384;
+  --color-text-faint: #6e685c;
 
-  /* 暗底上色块提亮一档，保证色块上的黑字仍然可读 */
-  --nb-yellow: #ffe873;
-  --nb-blue: #5b8dff;
-  --nb-red: #ff6b5c;
-  --nb-green: #4ade80;
-  --nb-lilac: #d0b8ff;
+  --color-border: #38342c;
+  --color-border-strong: #4d473c;
 
-  --color-accent: #ffe873;
-  --color-accent-ink: #0a0a0a;
+  --ed-accent: #e8603f;
+  --ed-accent-soft: rgba(232, 96, 63, 0.14);
 }
 
 /* =============================================================
@@ -74,7 +61,7 @@
 
   html {
     font-family:
-      "Space Grotesk", "Noto Sans SC", system-ui, -apple-system,
+      "Inter", "Noto Sans SC", system-ui, -apple-system,
       BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -82,25 +69,33 @@
   }
 
   body {
-    background: var(--color-bg);
+    background: var(--color-page);
     color: var(--color-text);
     line-height: 1.6;
     min-height: 100vh;
     transition:
-      background-color 0.2s steps(2),
-      color 0.2s steps(2);
+      background-color 0.25s ease,
+      color 0.25s ease;
   }
 
-  /* 标题全部走 display 字重，粗野风不用衬线 */
+  /* 中文大标题：Noto Sans SC 900，编辑海报式粗黑 */
   h1, h2, h3, .font-display {
     font-family:
-      "Space Grotesk", "Noto Sans SC", system-ui, sans-serif;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.05;
+      "Noto Sans SC", "Inter", system-ui, sans-serif;
+    font-weight: 900;
+    letter-spacing: 0.01em;
+    line-height: 1.1;
   }
 
-  /* 等宽体用于标签、时间、编号 */
+  /* 拉丁展示字：Anton，用于数字编号与英文大字 */
+  .font-anton {
+    font-family: "Anton", "Bebas Neue", Impact, sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    line-height: 0.95;
+  }
+
+  /* 等宽体用于戳记、标签、时间、编号 */
   .font-mono, code, kbd, pre, time {
     font-family:
       "JetBrains Mono", "SF Mono", Consolas, "Noto Sans SC", monospace;
@@ -112,332 +107,320 @@
   }
 
   ::selection {
-    background: var(--nb-yellow);
-    color: #0a0a0a;
+    background: var(--ed-accent);
+    color: #f4efe7;
   }
 
-  /* 键盘焦点：粗野风用实心块，不用柔光 */
   :focus-visible {
-    outline: var(--nb-border-w) solid var(--nb-blue);
-    outline-offset: 2px;
+    outline: 2px solid var(--ed-accent);
+    outline-offset: 3px;
   }
 }
 
 /* =============================================================
-   Background — 细网格纸，替代原来的光晕/噪点
+   Frame — 灰纸上的居中米纸画框，两侧 1px 竖线
    ============================================================= */
-.nb-grid {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image:
-    linear-gradient(to right, var(--color-ink) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--color-ink) 1px, transparent 1px);
-  background-size: 56px 56px;
-  opacity: 0.05;
-}
-[data-theme="dark"] .nb-grid {
-  opacity: 0.07;
-}
-
-/* =============================================================
-   核心原语：描边 + 硬投影
-   ============================================================= */
-.nb-box {
-  border: var(--nb-border-w) solid var(--color-ink);
-  border-radius: 0;
-  background: var(--color-surface);
-}
-
-.nb-shadow {
-  box-shadow: var(--nb-shadow-x) var(--nb-shadow-y) 0 0 var(--color-ink);
-}
-
-.nb-shadow-sm {
-  box-shadow: 3px 3px 0 0 var(--color-ink);
-}
-
-/* 可交互卡片：hover 抬起、active 压下，位移和阴影同步，像按下一个实体按钮 */
-.nb-card {
-  border: var(--nb-border-w) solid var(--color-ink);
-  border-radius: 0;
-  background: var(--color-surface);
-  box-shadow: var(--nb-shadow-x) var(--nb-shadow-y) 0 0 var(--color-ink);
+.ed-frame {
+  max-width: 64rem;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--color-bg);
+  border-left: 1px solid var(--color-border);
+  border-right: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
   transition:
-    transform 0.12s ease-out,
-    box-shadow 0.12s ease-out;
-}
-@media (hover: hover) {
-  .nb-card:hover {
-    transform: translate(-3px, -3px);
-    box-shadow: 9px 9px 0 0 var(--color-ink);
-  }
-}
-.nb-card:active {
-  transform: translate(3px, 3px);
-  box-shadow: 2px 2px 0 0 var(--color-ink);
+    background-color 0.25s ease,
+    border-color 0.25s ease;
 }
 
 /* =============================================================
-   Components
+   核心原语
    ============================================================= */
 
-/* 章节标签 — 实心色块 + 等宽大写 */
-.nb-label {
-  display: inline-block;
-  padding: 0.25rem 0.6rem;
-  border: var(--nb-border-w) solid var(--color-ink);
-  background: var(--nb-yellow);
-  color: #0a0a0a;
+/* 章节眉批 — 橙红小横杠 + 等宽大写戳记 */
+.ed-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   font-family: "JetBrains Mono", monospace;
   font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
+  color: var(--ed-accent);
 }
-
-/* 强调块：把一段文字刷成实心高亮 */
-.nb-mark {
+.ed-eyebrow .bar {
   display: inline-block;
-  padding: 0 0.2em;
-  background: var(--nb-yellow);
-  color: #0a0a0a;
-  box-shadow: 3px 3px 0 0 var(--color-ink);
+  width: 22px;
+  height: 2px;
+  background: var(--ed-accent);
+  flex-shrink: 0;
 }
 
-/* 状态胶囊（其实是方块）— 带跳动的方点 */
-.nb-status {
+/* 小戳记 — 1px 细框等宽字，如 "EST · 2024" */
+.ed-stamp {
+  display: inline-block;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 3px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+/* 斜切色块标记 — 刊头与页脚的平行四边形 */
+.ed-mark {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: var(--ed-accent);
+  transform: skew(-12deg);
+  flex-shrink: 0;
+}
+.ed-mark-sm {
+  width: 16px;
+  height: 16px;
+}
+
+/* 行内强调 — 斜体橙红，替代色块高亮 */
+.ed-em {
+  font-style: italic;
+  color: var(--ed-accent);
+  font-weight: 600;
+}
+
+/* 状态戳 — 带跳动的斜切小方块 */
+.ed-status {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem 0.7rem;
-  border: var(--nb-border-w) solid var(--color-ink);
-  background: var(--nb-green);
-  color: #0a0a0a;
+  gap: 0.55rem;
   font-family: "JetBrains Mono", monospace;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  box-shadow: 3px 3px 0 0 var(--color-ink);
+  color: var(--color-text-muted);
 }
-.nb-status .dot {
-  width: 8px;
-  height: 8px;
-  background: #0a0a0a;
-  animation: nb-blink 1.4s steps(2) infinite;
+.ed-status .dot {
+  width: 9px;
+  height: 9px;
+  background: var(--ed-accent);
+  transform: skew(-12deg);
+  animation: ed-blink 1.6s steps(2) infinite;
 }
-@keyframes nb-blink {
+@keyframes ed-blink {
   0%, 49%  { opacity: 1; }
-  50%, 100% { opacity: 0.15; }
+  50%, 100% { opacity: 0.2; }
 }
 
-/* 技术栈标签 — 小方块 */
-.nb-tag {
+/* 标签 — 细框等宽小字 */
+.ed-tag {
   display: inline-block;
-  padding: 0.15rem 0.5rem;
-  border: 2px solid var(--color-ink);
-  background: var(--color-bg-soft);
-  color: var(--color-text);
+  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 3px;
+  color: var(--color-text-muted);
   font-family: "JetBrains Mono", monospace;
-  font-size: 0.68rem;
-  font-weight: 500;
-  transition: background-color 0.12s ease-out, transform 0.12s ease-out;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background-color 0.15s ease;
 }
 @media (hover: hover) {
-  .nb-tag:hover {
-    background: var(--nb-yellow);
-    color: #0a0a0a;
+  .ed-tag:hover {
+    color: var(--ed-accent);
+    border-color: var(--ed-accent);
+    background: var(--ed-accent-soft);
+  }
+}
+
+/* 按钮 — 墨底纸字主按钮 + 细框次按钮，带箭头 */
+.ed-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.8rem 1.3rem;
+  border: 1px solid var(--color-ink);
+  background: transparent;
+  color: var(--color-text);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+@media (hover: hover) {
+  .ed-btn:hover {
+    background: var(--ed-accent-soft);
+    border-color: var(--ed-accent);
+    color: var(--ed-accent);
     transform: translateY(-2px);
   }
 }
+.ed-btn:active {
+  transform: translateY(0);
+}
 
-/* 主按钮 / 链接按钮 */
-.nb-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 0.95rem;
-  border: var(--nb-border-w) solid var(--color-ink);
-  background: var(--color-surface);
-  color: var(--color-text);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  box-shadow: 4px 4px 0 0 var(--color-ink);
-  transition:
-    transform 0.12s ease-out,
-    box-shadow 0.12s ease-out,
-    background-color 0.12s ease-out;
-  cursor: pointer;
+.ed-btn-primary {
+  background: var(--color-ink);
+  color: var(--color-bg);
 }
 @media (hover: hover) {
-  .nb-btn:hover {
-    background: var(--nb-yellow);
-    color: #0a0a0a;
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0 0 var(--color-ink);
+  .ed-btn-primary:hover {
+    background: var(--ed-accent);
+    border-color: var(--ed-accent);
+    color: #f4efe7;
   }
 }
-.nb-btn:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 0 var(--color-ink);
+
+/* 按钮里的箭头 — 横线 + 三角 */
+.ed-arrow {
+  display: inline-block;
+  width: 22px;
+  height: 1px;
+  background: currentColor;
+  position: relative;
+  flex-shrink: 0;
+}
+.ed-arrow::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -3px;
+  border: 4px solid transparent;
+  border-left-color: currentColor;
 }
 
-.nb-btn-primary {
-  background: var(--nb-blue);
-  color: #ffffff;
-}
-[data-theme="dark"] .nb-btn-primary {
-  color: #0a0a0a;
-}
-
-/* 图标按钮 — 正方形 */
-.nb-icon-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border: var(--nb-border-w) solid var(--color-ink);
+/* 卡片 — 细线框，hover 时描边加深并轻微上浮 */
+.ed-card {
+  border: 1px solid var(--color-border);
   background: var(--color-surface);
-  color: var(--color-text);
-  box-shadow: 3px 3px 0 0 var(--color-ink);
   transition:
-    transform 0.12s ease-out,
-    box-shadow 0.12s ease-out,
-    background-color 0.12s ease-out;
-  cursor: pointer;
+    border-color 0.15s ease,
+    transform 0.15s ease,
+    background-color 0.25s ease;
 }
 @media (hover: hover) {
-  .nb-icon-btn:hover {
-    background: var(--nb-yellow);
-    color: #0a0a0a;
-    transform: translate(-2px, -2px);
-    box-shadow: 5px 5px 0 0 var(--color-ink);
+  .ed-card:hover {
+    border-color: var(--color-ink);
+    transform: translateY(-3px);
   }
 }
-.nb-icon-btn:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 0 var(--color-ink);
-}
 
-/* 导航链接 — hover 时整块刷成高亮 */
-.nb-nav-link {
-  padding: 0.25rem 0.5rem;
-  border: 2px solid transparent;
+/* 导航链接 — 等宽大写，hover/当前页变橙红 */
+.ed-nav-link {
   font-family: "JetBrains Mono", monospace;
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--color-text-muted);
-  transition: all 0.12s ease-out;
+  transition: color 0.15s ease;
 }
 @media (hover: hover) {
-  .nb-nav-link:hover {
-    border-color: var(--color-ink);
-    background: var(--nb-yellow);
-    color: #0a0a0a;
+  .ed-nav-link:hover {
+    color: var(--ed-accent);
   }
 }
-.nb-nav-link[aria-current="page"] {
-  border-color: var(--color-ink);
-  background: var(--nb-yellow);
-  color: #0a0a0a;
+.ed-nav-link[aria-current="page"] {
+  color: var(--ed-accent);
 }
 
-/* 内容中的行内链接 — 粗下划线，hover 刷块 */
-.nb-link {
-  font-weight: 700;
-  border-bottom: 3px solid var(--color-ink);
-  transition: background-color 0.12s ease-out;
+/* 内容中的行内链接 — 细下划线，hover 变橙红 */
+.ed-link {
+  font-weight: 600;
+  border-bottom: 1px solid var(--color-border-strong);
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
 }
 @media (hover: hover) {
-  .nb-link:hover {
-    background: var(--nb-yellow);
-    color: #0a0a0a;
+  .ed-link:hover {
+    color: var(--ed-accent);
+    border-color: var(--ed-accent);
   }
 }
 
-/* 主题切换按钮 */
-.nb-theme-btn {
+/* 主题切换按钮 — 细框方块 */
+.ed-theme-btn {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border: var(--nb-border-w) solid var(--color-ink);
-  background: var(--nb-lilac);
-  color: #0a0a0a;
-  box-shadow: 3px 3px 0 0 var(--color-ink);
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--color-text-muted);
   cursor: pointer;
-  transition: transform 0.12s ease-out, box-shadow 0.12s ease-out;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background-color 0.15s ease;
 }
 @media (hover: hover) {
-  .nb-theme-btn:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 5px 5px 0 0 var(--color-ink);
+  .ed-theme-btn:hover {
+    color: var(--ed-accent);
+    border-color: var(--ed-accent);
+    background: var(--ed-accent-soft);
   }
 }
-.nb-theme-btn:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 0 var(--color-ink);
-}
-.nb-theme-btn .icon-sun,
-.nb-theme-btn .icon-moon {
+.ed-theme-btn .icon-sun,
+.ed-theme-btn .icon-moon {
   position: absolute;
 }
-.nb-theme-btn .icon-sun { display: none; }
-[data-theme="dark"] .nb-theme-btn .icon-sun { display: block; }
-[data-theme="dark"] .nb-theme-btn .icon-moon { display: none; }
+.ed-theme-btn .icon-sun { display: none; }
+[data-theme="dark"] .ed-theme-btn .icon-sun { display: block; }
+[data-theme="dark"] .ed-theme-btn .icon-moon { display: none; }
 
-/* =============================================================
-   Marquee band — 黄底黑边横幅
-   ============================================================= */
-.nb-band {
-  border-top: var(--nb-border-w) solid var(--color-ink);
-  border-bottom: var(--nb-border-w) solid var(--color-ink);
-  background: var(--nb-yellow);
-  color: #0a0a0a;
-  overflow: hidden;
+/* 大数字 — Anton，用于参数/编号 */
+.ed-num {
+  font-family: "Anton", "Bebas Neue", Impact, sans-serif;
+  font-weight: 400;
+  font-size: 2.6rem;
+  line-height: 0.9;
+  color: var(--color-text);
 }
-.marquee {
-  display: flex;
-  gap: 2.5rem;
-  white-space: nowrap;
-  animation: marquee 30s linear infinite;
-}
-@keyframes marquee {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+.ed-num sup {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.8rem;
+  vertical-align: top;
+  margin-left: 4px;
+  color: var(--color-text-muted);
+  letter-spacing: 0.04em;
 }
 
 /* =============================================================
-   Animations — 粗野风用离散步进，不用缓动淡入
+   Animations — 克制的淡入上移
    ============================================================= */
-@keyframes nb-pop {
-  0%   { opacity: 0; transform: translate(-8px, 8px); }
-  100% { opacity: 1; transform: translate(0, 0); }
+@keyframes ed-rise {
+  0%   { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
-.nb-pop {
-  animation: nb-pop 0.35s cubic-bezier(0.2, 1.2, 0.4, 1) both;
+.ed-rise {
+  animation: ed-rise 0.45s ease-out both;
 }
-.nb-delay-1 { animation-delay: 0.05s; }
-.nb-delay-2 { animation-delay: 0.15s; }
-.nb-delay-3 { animation-delay: 0.25s; }
+.ed-delay-1 { animation-delay: 0.05s; }
+.ed-delay-2 { animation-delay: 0.15s; }
+.ed-delay-3 { animation-delay: 0.25s; }
 
-.nb-stagger > *:nth-child(1) { animation-delay: 0.06s; }
-.nb-stagger > *:nth-child(2) { animation-delay: 0.13s; }
-.nb-stagger > *:nth-child(3) { animation-delay: 0.2s; }
-.nb-stagger > *:nth-child(4) { animation-delay: 0.27s; }
-.nb-stagger > *:nth-child(5) { animation-delay: 0.34s; }
-.nb-stagger > *:nth-child(6) { animation-delay: 0.41s; }
+.ed-stagger > *:nth-child(1) { animation-delay: 0.05s; }
+.ed-stagger > *:nth-child(2) { animation-delay: 0.12s; }
+.ed-stagger > *:nth-child(3) { animation-delay: 0.19s; }
+.ed-stagger > *:nth-child(4) { animation-delay: 0.26s; }
+.ed-stagger > *:nth-child(5) { animation-delay: 0.33s; }
+.ed-stagger > *:nth-child(6) { animation-delay: 0.4s; }
 
 /* =============================================================
    Reduced motion
@@ -451,12 +434,8 @@
     transition-duration: 0.01ms !important;
   }
   html { scroll-behavior: auto; }
-  .nb-card:hover,
-  .nb-btn:hover,
-  .nb-icon-btn:hover,
-  .nb-theme-btn:hover,
-  .nb-tag:hover { transform: none; }
-  .marquee { animation: none; }
+  .ed-card:hover,
+  .ed-btn:hover { transform: none; }
 }
 
 /* =============================================================
@@ -468,24 +447,22 @@
   font-size: 1rem;
 }
 
-/* Headings — 左侧粗竖条标记层级 */
+/* Headings — 左侧橙红细条标记层级 */
 .prose-custom h2 {
   font-size: 1.6rem;
-  font-weight: 700;
   line-height: 1.2;
   color: var(--color-text);
   margin: 2.4em 0 0.7em;
-  padding-left: 0.7rem;
-  border-left: 8px solid var(--nb-yellow);
+  padding-left: 0.75rem;
+  border-left: 3px solid var(--ed-accent);
 }
 .prose-custom h3 {
   font-size: 1.25rem;
-  font-weight: 700;
   line-height: 1.25;
   color: var(--color-text);
   margin: 2em 0 0.5em;
-  padding-left: 0.7rem;
-  border-left: 5px solid var(--nb-blue);
+  padding-left: 0.75rem;
+  border-left: 2px solid var(--color-border-strong);
 }
 .prose-custom h2:first-child {
   margin-top: 0;
@@ -500,12 +477,15 @@
 /* Links inside content */
 .prose-custom a {
   color: var(--color-text);
-  font-weight: 700;
-  border-bottom: 3px solid var(--nb-blue);
+  font-weight: 600;
+  border-bottom: 1px solid var(--ed-accent);
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
 }
 .prose-custom a:hover {
-  background: var(--nb-yellow);
-  color: #0a0a0a;
+  color: var(--ed-accent);
+  background: var(--ed-accent-soft);
 }
 
 /* Lists — 方块 marker */
@@ -520,7 +500,7 @@
 }
 .prose-custom ul li::marker {
   content: "▪ ";
-  color: var(--nb-blue);
+  color: var(--ed-accent);
 }
 .prose-custom ol li::marker {
   color: var(--color-text);
@@ -532,20 +512,19 @@
 .prose-custom :not(pre) > code {
   font-size: 0.86em;
   padding: 0.12em 0.4em;
-  border: 2px solid var(--color-ink);
-  border-radius: 0;
-  background: var(--nb-yellow);
-  color: #0a0a0a;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 3px;
+  background: var(--color-bg-soft);
+  color: var(--color-text);
 }
 
 /* Fenced code blocks */
 .prose-custom pre {
   margin: 1.5em 0;
   padding: 1.1em 1.3em;
-  border: var(--nb-border-w) solid var(--color-ink);
-  border-radius: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
   background: var(--color-bg-soft);
-  box-shadow: 5px 5px 0 0 var(--color-ink);
   overflow-x: auto;
   font-size: 0.84rem;
   line-height: 1.6;
@@ -557,14 +536,13 @@
   padding: 0;
 }
 
-/* Blockquote — 粗左条 + 实心底 */
+/* Blockquote — 橙红左条 */
 .prose-custom blockquote {
   margin: 1.5em 0;
   padding: 0.9em 1.2em;
-  border: var(--nb-border-w) solid var(--color-ink);
-  border-left-width: 10px;
-  border-left-color: var(--nb-red);
-  border-radius: 0;
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--ed-accent);
+  border-radius: 3px;
   background: var(--color-bg-soft);
 }
 .prose-custom blockquote p {
@@ -573,10 +551,10 @@
   font-weight: 500;
 }
 
-/* Horizontal rule — 粗黑线 */
+/* Horizontal rule — 细线 */
 .prose-custom hr {
   border: none;
-  border-top: var(--nb-border-w) solid var(--color-ink);
+  border-top: 1px solid var(--color-border-strong);
   margin: 2.2em 0;
 }
 
@@ -586,26 +564,24 @@
   border-collapse: collapse;
   margin: 1.5em 0;
   font-size: 0.9rem;
-  border: var(--nb-border-w) solid var(--color-ink);
+  border: 1px solid var(--color-border);
 }
 .prose-custom th,
 .prose-custom td {
   padding: 0.6em 0.9em;
-  border: 2px solid var(--color-ink);
+  border: 1px solid var(--color-border);
   text-align: left;
 }
 .prose-custom th {
-  font-weight: 700;
-  background: var(--nb-yellow);
-  color: #0a0a0a;
+  background: var(--color-bg-soft);
+  color: var(--color-text);
 }
 
 /* Images */
 .prose-custom img {
   max-width: 100%;
-  border: var(--nb-border-w) solid var(--color-ink);
-  border-radius: 0;
-  box-shadow: 6px 6px 0 0 var(--color-ink);
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
   margin: 1.6em 0;
 }
 
