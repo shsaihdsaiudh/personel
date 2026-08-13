@@ -1,7 +1,29 @@
 ---
+import { getCollection } from "astro:content";
+import { readFileSync, readdirSync } from "node:fs";
+import path from "node:path";
 import Layout from "../layouts/Layout.astro";
 
 const today = new Date().toISOString().slice(0, 10);
+
+// 构建期把文章原文嵌入页面，编辑模式无需调 GitHub API（匿名调用有频率限制）
+const blogDir = "src/data/blog";
+const files = readdirSync(blogDir).filter(
+  (f) => /\.mdx?$/.test(f) && !f.startsWith("_"),
+);
+const posts = await getCollection("blog");
+const postStore: Record<string, { file: string; raw: string }> = {};
+for (const post of posts) {
+  const file = files.find((f) => f.replace(/\.mdx?$/, "").includes(post.id));
+  if (file) {
+    postStore[post.id] = {
+      file,
+      raw: readFileSync(path.join(blogDir, file), "utf-8").replace(/\r\n/g, "\n"),
+    };
+  }
+}
+// 防止文章内容里的 "</script>" 提前闭合脚本标签
+const postStoreJson = JSON.stringify(postStore).replace(/</g, "\\u003c");
 ---
 
 <Layout
@@ -24,6 +46,11 @@ const today = new Date().toISOString().slice(0, 10);
       填好下面的内容，点「发布」会跳到 GitHub 网页编辑器——文件名和文章都已预填，
       在那里点一次 Commit，Vercel 就会自动构建上线。全程不需要 clone 仓库。
     </p>
+    <p
+      id="edit-status"
+      class="mt-3 text-sm leading-relaxed hidden"
+      style="color: var(--ed-accent);"
+    ></p>
 
     <form id="post-form" class="flex flex-col gap-5 mt-10 ed-rise ed-delay-3">
       <div class="flex flex-col gap-1.5">
@@ -56,9 +83,10 @@ const today = new Date().toISOString().slice(0, 10);
       </div>
 
       <div class="flex flex-col gap-1.5">
-        <label class="ed-form-label" for="f-body">正文（Markdown）</label>
-        <textarea class="ed-input font-mono" id="f-body" rows="16" required
-          placeholder="## 开始写吧"></textarea>
+        <label class="ed-form-label" for="editor">正文</label>
+        <div class="ed-editor-wrap">
+          <div id="editor"></div>
+        </div>
       </div>
 
       <label class="flex items-center gap-2.5 text-sm cursor-pointer select-none"
@@ -69,7 +97,7 @@ const today = new Date().toISOString().slice(0, 10);
 
       <div class="flex flex-wrap items-center gap-3 mt-2">
         <button type="submit" class="ed-btn ed-btn-primary">
-          <span>发布到 GitHub</span>
+          <span id="submit-label">发布到 GitHub</span>
           <span class="ed-arrow" aria-hidden="true"></span>
         </button>
         <button type="button" id="copy-btn" class="ed-btn">
@@ -81,14 +109,54 @@ const today = new Date().toISOString().slice(0, 10);
     </form>
   </section>
 
+  <link
+    href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css"
+    rel="stylesheet"
+  />
+  <script is:inline src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+  <script is:inline src="https://cdn.jsdelivr.net/npm/turndown@7.2.0/dist/turndown.js"></script>
+  <script is:inline src="https://cdn.jsdelivr.net/npm/marked@15.0.0/marked.min.js"></script>
+  <script id="post-store" type="application/json" set:html={postStoreJson}></script>
+
   <script is:inline>
     (function () {
       var REPO = "shsaihdsaiudh/personel";
       var BRANCH = "main";
       var DIR = "src/data/blog";
 
+      // 富文本编辑器：加粗、标题、列表、链接、引用、代码块
+      var quill = new Quill("#editor", {
+        theme: "snow",
+        placeholder: "开始写吧",
+        modules: {
+          toolbar: [
+            [{ header: [2, 3, false] }],
+            ["bold", "italic", "strike"],
+            ["blockquote", "code-block"],
+            [{ list: "ordered" }, { list: "bullet" }],
+            ["link", "image"],
+            ["clean"],
+          ],
+        },
+      });
+
+      // 富文本 HTML → Markdown
+      var td = new TurndownService({
+        headingStyle: "atx",
+        codeBlockStyle: "fenced",
+        bulletListMarker: "-",
+      });
+
       function val(id) { return document.getElementById(id).value.trim(); }
+      function setVal(id, v) { document.getElementById(id).value = v; }
       function yaml(s) { return '"' + s.replace(/\\/g, "\\\\").replace(/"/g, '\\"') + '"'; }
+      function unquote(s) {
+        var t = s.trim();
+        if (t.length >= 2 && t[0] === '"' && t[t.length - 1] === '"') {
+          return t.slice(1, -1).replace(/\\"/g, '"').replace(/\\\\/g, "\\");
+        }
+        return t;
+      }
 
       function build() {
         var title = val("f-title");
@@ -99,7 +167,7 @@ const today = new Date().toISOString().slice(0, 10);
           ? val("f-tags").split(/[,，]/).map(function (t) { return t.trim(); }).filter(Boolean)
           : [];
         var draft = document.getElementById("f-draft").checked;
-        var body = document.getElementById("f-body").value.replace(/\s+$/, "");
+        var body = td.turndown(quill.getSemanticHTML()).replace(/\s+$/, "");
 
         var fm = ["---", "title: " + yaml(title), "description: " + yaml(desc),
           "date: " + date, "slug: " + yaml(slug)];
@@ -113,16 +181,88 @@ const today = new Date().toISOString().slice(0, 10);
         };
       }
 
+      function bodyEmpty() {
+        return quill.getText().trim().length === 0;
+      }
+
+      // ---- 编辑模式：/write?edit=<slug> ----
+      var editFile = null;
+      var editId = new URLSearchParams(location.search).get("edit");
+
+      function parsePost(raw) {
+        var m = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+        if (!m) return { meta: {}, body: raw };
+        var meta = {};
+        m[1].split("\n").forEach(function (line) {
+          var kv = line.match(/^(\w+):\s*(.*)$/);
+          if (!kv) return;
+          var k = kv[1], v = kv[2].trim();
+          if (k === "tags") {
+            meta.tags = v.replace(/^\[|\]$/g, "").split(",")
+              .map(function (t) { return unquote(t); }).filter(Boolean);
+          } else if (k === "draft") {
+            meta.draft = v === "true";
+          } else {
+            meta[k] = unquote(v);
+          }
+        });
+        return { meta: meta, body: m[2].replace(/^\n+/, "") };
+      }
+
+      function loadPost(id) {
+        var status = document.getElementById("edit-status");
+        var store = JSON.parse(
+          document.getElementById("post-store").textContent || "{}"
+        );
+        var entry = store[id];
+        if (!entry) {
+          status.textContent = "加载失败：找不到对应的文章（" + id + "）";
+          status.classList.remove("hidden");
+          return;
+        }
+        editFile = entry.file;
+        var post = parsePost(entry.raw);
+        var meta = post.meta;
+        setVal("f-title", meta.title || "");
+        setVal("f-desc", meta.description || "");
+        if (meta.date) setVal("f-date", String(meta.date).slice(0, 10));
+        setVal("f-slug", meta.slug || "");
+        setVal("f-tags", (meta.tags || []).join(", "));
+        document.getElementById("f-draft").checked = !!meta.draft;
+        quill.clipboard.dangerouslyPasteHTML(marked.parse(post.body));
+
+        document.getElementById("submit-label").textContent = "保存修改到 GitHub";
+        status.textContent = "编辑模式：已加载《" + (meta.title || editFile) +
+          "》（" + editFile + "）。保存时会跳到该文件的 GitHub 编辑页，正文已自动复制，全选粘贴后 Commit 即可。";
+        status.classList.remove("hidden");
+      }
+
+      if (editId) loadPost(editId);
+
       document.getElementById("post-form").addEventListener("submit", function (e) {
         e.preventDefault();
+        if (bodyEmpty()) {
+          quill.focus();
+          return;
+        }
         var post = build();
-        var url = "https://github.com/" + REPO + "/new/" + BRANCH + "/" + DIR +
-          "?filename=" + encodeURIComponent(post.filename) +
-          "&value=" + encodeURIComponent(post.markdown);
+        var url;
+        if (editFile) {
+          // GitHub 编辑页不一定支持 value 预填，所以同时复制到剪贴板兜底
+          navigator.clipboard.writeText(post.markdown);
+          url = "https://github.com/" + REPO + "/edit/" + BRANCH + "/" + DIR + "/" +
+            encodeURIComponent(editFile) +
+            "?value=" + encodeURIComponent(post.markdown);
+        } else {
+          url = "https://github.com/" + REPO + "/new/" + BRANCH + "/" + DIR +
+            "?filename=" + encodeURIComponent(post.filename) +
+            "&value=" + encodeURIComponent(post.markdown);
+        }
         window.open(url, "_blank", "noopener");
       });
 
       document.getElementById("copy-btn").addEventListener("click", function () {
+        if (bodyEmpty()) return;
         var post = build();
         navigator.clipboard.writeText(post.markdown).then(function () {
           var hint = document.getElementById("copy-hint");
@@ -134,7 +274,7 @@ const today = new Date().toISOString().slice(0, 10);
   </script>
 </Layout>
 
-<style>
+<style is:global>
   .ed-form-label {
     font-family: "JetBrains Mono", monospace;
     font-size: 0.66rem;
@@ -162,5 +302,67 @@ const today = new Date().toISOString().slice(0, 10);
   }
   textarea.ed-input {
     resize: vertical;
+  }
+
+  /* Quill 编辑器适配主题 */
+  .ed-editor-wrap .ql-toolbar {
+    border: 1px solid var(--color-border-strong);
+    border-radius: 3px 3px 0 0;
+    background: var(--color-bg-soft);
+  }
+  .ed-editor-wrap .ql-container {
+    border: 1px solid var(--color-border-strong);
+    border-top: none;
+    border-radius: 0 0 3px 3px;
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-family: "Inter", "Noto Sans SC", system-ui, sans-serif;
+    font-size: 0.92rem;
+    min-height: 18rem;
+  }
+  .ed-editor-wrap .ql-editor {
+    min-height: 18rem;
+    line-height: 1.7;
+  }
+  .ed-editor-wrap .ql-editor.ql-blank::before {
+    color: var(--color-text-faint);
+    font-style: normal;
+  }
+  .ed-editor-wrap .ql-toolbar .ql-stroke {
+    stroke: var(--color-text-muted);
+  }
+  .ed-editor-wrap .ql-toolbar .ql-fill {
+    fill: var(--color-text-muted);
+  }
+  .ed-editor-wrap .ql-toolbar .ql-picker {
+    color: var(--color-text-muted);
+  }
+  .ed-editor-wrap .ql-toolbar button:hover .ql-stroke,
+  .ed-editor-wrap .ql-toolbar button.ql-active .ql-stroke {
+    stroke: var(--ed-accent);
+  }
+  .ed-editor-wrap .ql-toolbar button:hover .ql-fill,
+  .ed-editor-wrap .ql-toolbar button.ql-active .ql-fill {
+    fill: var(--ed-accent);
+  }
+  .ed-editor-wrap .ql-toolbar .ql-picker.ql-active,
+  .ed-editor-wrap .ql-toolbar .ql-picker:hover {
+    color: var(--ed-accent);
+  }
+  .ed-editor-wrap .ql-snow .ql-editor code,
+  .ed-editor-wrap .ql-snow .ql-editor pre {
+    background: var(--color-bg-soft);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    font-family: "JetBrains Mono", monospace;
+  }
+  .ed-editor-wrap .ql-snow .ql-editor code {
+    padding: 0.1em 0.35em;
+    font-size: 0.86em;
+  }
+  .ed-editor-wrap .ql-snow .ql-editor pre {
+    padding: 0.8em 1em;
+    font-size: 0.84rem;
   }
 </style>

@@ -63,6 +63,13 @@ const { post } = Astro.props;
             </span>
           )
         }
+        <a
+          href={`/write?edit=${post.id}`}
+          class="ed-link font-mono text-[0.66rem] tracking-[0.12em] uppercase"
+          style="color: var(--color-text-muted);"
+        >
+          编辑本文
+        </a>
       </div>
 
       <!-- Title -->
